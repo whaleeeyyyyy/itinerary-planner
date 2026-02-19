@@ -216,39 +216,6 @@
 
     .topbar-right { display: flex; gap: 10px; align-items: center; min-width: 0; }
     .topbar-actions { display: flex; gap: 10px; align-items: center; }
-    .sync-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      border: 1px solid var(--parchment);
-      border-radius: 999px;
-      padding: 4px 10px;
-      color: var(--mist);
-      background: rgba(255,255,255,0.6);
-      white-space: nowrap;
-      max-width: 220px;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .sync-badge.online {
-      color: var(--forest);
-      border-color: rgba(26,58,42,0.2);
-      background: rgba(26,58,42,0.06);
-    }
-    .sync-badge.offline {
-      color: var(--terracotta);
-      border-color: rgba(192,97,58,0.35);
-      background: rgba(192,97,58,0.08);
-    }
-    .sync-badge.syncing {
-      color: #a07820;
-      border-color: rgba(201,168,76,0.45);
-      background: rgba(201,168,76,0.14);
-    }
 
     .btn {
       display: inline-flex; align-items: center; gap: 6px;
@@ -492,30 +459,6 @@
     .header-kebab-item.edit:hover { background: rgba(26,58,42,0.06); color: var(--forest); }
     .header-kebab-item.delete { color: #b2454f; }
     .header-kebab-item.delete:hover { background: #fff2f4; }
-
-    .tabs {
-      display: flex; gap: 0;
-      background: var(--white);
-      border-radius: 10px;
-      border: 1px solid var(--parchment);
-      padding: 4px;
-      margin-bottom: 28px;
-      overflow-x: auto;
-    }
-    .tab {
-      padding: 8px 18px;
-      border-radius: 7px;
-      cursor: pointer;
-      font-size: 14px;
-      color: var(--mist);
-      transition: all 0.18s;
-      white-space: nowrap;
-      border: none;
-      background: transparent;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .tab.active { background: var(--forest); color: #fff; }
-    .tab:hover:not(.active) { background: var(--parchment); color: var(--ink); }
 
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
@@ -1082,7 +1025,6 @@
     .topbar-left { gap: 8px; min-width: 0; flex: 1; }
     .topbar-right { gap: 8px; min-width: 0; }
     .topbar-title { font-size: 20px; }
-    .sync-badge { display: none; }
 
     /* Touch targets */
     .btn {
@@ -1360,7 +1302,6 @@
 
     /* Tablet (>=768px): 2-column layouts and desktop-like tables */
     @media (min-width: 768px) {
-      .sync-badge { display: inline-flex; max-width: 42vw; }
       .topbar { padding: 0 18px; }
       .topbar-title { font-size: 24px; }
       .content { padding: 24px; }
@@ -1666,7 +1607,6 @@
         <div class="topbar-title" id="topbarTitle">Dashboard</div>
       </div>
       <div class="topbar-right">
-        <div class="sync-badge" id="syncStatusBadge">Checking…</div>
         <div class="topbar-actions" id="topbarActions">
           <button class="btn btn-primary" onclick="openNewTripModal()">+ New Trip</button>
         </div>
@@ -1708,47 +1648,6 @@
             <button class="itinerary-filter-btn" data-itinerary-filter="other" onclick="setItineraryFilter('other')">📌 Other</button>
           </div>
           <div id="daysContainer"></div>
-        </div>
-
-        <!-- Accommodation tab -->
-        <div class="tab-panel" id="tab-accommodation">
-          <div class="panel-actions-right">
-            <button class="btn btn-primary" onclick="openAddAccomModal()">+ Add Accommodation</button>
-          </div>
-          <div id="accomContainer"></div>
-        </div>
-
-        <!-- Transport tab -->
-        <div class="tab-panel" id="tab-transport">
-          <div class="panel-actions-right">
-            <button class="btn btn-primary" onclick="openAddTransportModal()">+ Add Transport</button>
-          </div>
-          <div id="transportContainer"></div>
-        </div>
-
-        <!-- Budget tab -->
-        <div class="tab-panel" id="tab-budget">
-          <div class="budget-overview" id="budgetOverview"></div>
-          <div class="section-head">
-            <h2>Expenses</h2>
-            <button class="btn btn-primary btn-sm" onclick="openAddExpenseModal()">+ Add Expense</button>
-          </div>
-          <div class="table-scroll">
-            <table class="expense-table" id="expenseTable">
-              <thead><tr>
-                <th>Item</th><th>Category</th><th>Date</th><th>Amount</th><th></th>
-              </tr></thead>
-              <tbody id="expenseBody"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Packing tab -->
-        <div class="tab-panel" id="tab-packing">
-          <div class="panel-actions-right">
-            <button class="btn btn-primary" onclick="openAddPackingModal()">+ Add Item</button>
-          </div>
-          <div class="checklist-grid" id="packingGrid"></div>
         </div>
       </div>
 
@@ -1932,28 +1831,6 @@
   </div>
 </div>
 
-<!-- Add Day -->
-<div class="modal-overlay" id="modalAddDay">
-  <div class="modal">
-    <div class="modal-head">
-      <h2>Add Day</h2>
-      <button class="modal-close" onclick="closeModal('modalAddDay')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group"><label>Day Number</label><input type="number" id="fDayNum" placeholder="1" /></div>
-        <div class="form-group"><label>Date</label><input type="date" id="fDayDate" /></div>
-      </div>
-      <div class="form-group"><label>Day Title</label><input type="text" id="fDayTitle" placeholder="e.g. Arrival & Shibuya Explore" /></div>
-      <div class="form-group"><label>Notes</label><textarea id="fDayNotes" placeholder="General notes for the day..."></textarea></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modalAddDay')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveDay()">Add Day</button>
-    </div>
-  </div>
-</div>
-
 <!-- Add Activity -->
 <div class="modal-overlay" id="modalAddActivity">
   <div class="modal">
@@ -2009,132 +1886,6 @@
   </div>
 </div>
 
-<!-- Add Accommodation -->
-<div class="modal-overlay" id="modalAddAccom">
-  <div class="modal">
-    <div class="modal-head">
-      <h2>Add Accommodation 🏨</h2>
-      <button class="modal-close" onclick="closeModal('modalAddAccom')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group"><label>Property Name</label><input type="text" id="fAccomName" placeholder="e.g. Park Hyatt Tokyo" /></div>
-      <div class="form-group"><label>Address</label><input type="text" id="fAccomAddr" placeholder="Full address" /></div>
-      <div class="form-row">
-        <div class="form-group"><label>Check-in</label><input type="date" id="fAccomIn" /></div>
-        <div class="form-group"><label>Check-out</label><input type="date" id="fAccomOut" /></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Confirmation #</label><input type="text" id="fAccomConf" placeholder="ABC123" /></div>
-        <div class="form-group"><label>Total Cost</label><input type="number" id="fAccomCost" placeholder="0" /></div>
-      </div>
-      <div class="form-group"><label>Notes</label><textarea id="fAccomNotes" placeholder="Booking platform, contact, special requests..."></textarea></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modalAddAccom')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveAccom()">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- Add Transport -->
-<div class="modal-overlay" id="modalAddTransport">
-  <div class="modal">
-    <div class="modal-head">
-      <h2>Add Transport 🚌</h2>
-      <button class="modal-close" onclick="closeModal('modalAddTransport')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group"><label>Type</label>
-          <select id="fTransType">
-            <option>✈️ Flight</option><option>🚂 Train</option><option>🚌 Bus</option><option>🚗 Car Rental</option><option>🚢 Ferry</option><option>🚕 Taxi/Grab</option>
-          </select>
-        </div>
-        <div class="form-group"><label>Confirmation #</label><input type="text" id="fTransConf" placeholder="Optional" /></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>From</label><input type="text" id="fTransFrom" placeholder="Kuala Lumpur" /></div>
-        <div class="form-group"><label>To</label><input type="text" id="fTransTo" placeholder="Tokyo" /></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Departure</label><input type="datetime-local" id="fTransDep" /></div>
-        <div class="form-group"><label>Arrival</label><input type="datetime-local" id="fTransArr" /></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>Operator / Airline</label><input type="text" id="fTransOp" placeholder="AirAsia" /></div>
-        <div class="form-group"><label>Cost</label><input type="number" id="fTransCost" placeholder="0" /></div>
-      </div>
-      <div class="form-group"><label>Notes</label><textarea id="fTransNotes" placeholder="Seat numbers, terminal, baggage info..."></textarea></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modalAddTransport')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveTransport()">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- Add Expense -->
-<div class="modal-overlay" id="modalAddExpense">
-  <div class="modal">
-    <div class="modal-head">
-      <h2>Add Expense 💸</h2>
-      <button class="modal-close" onclick="closeModal('modalAddExpense')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-group"><label>Item</label><input type="text" id="fExpItem" placeholder="e.g. Dinner at Nishiki Market" /></div>
-      <div class="form-row">
-        <div class="form-group"><label>Category</label>
-          <select id="fExpCat">
-            <option>🍜 Food</option><option>🏛️ Activity</option><option>✈️ Flight</option><option>🏨 Accommodation</option><option>🚌 Transport</option><option>🛍️ Shopping</option><option>💊 Health</option><option>📌 Other</option>
-          </select>
-        </div>
-        <div class="form-group"><label>Date</label><input type="date" id="fExpDate" /></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>From Currency</label><select id="fExpFromCur"></select></div>
-        <div class="form-group"><label>Amount In Source Currency</label><input type="number" id="fExpFromAmt" placeholder="0" /></div>
-      </div>
-      <div class="form-row">
-        <div class="form-group"><label>To Currency</label><select id="fExpToCur"></select></div>
-        <div class="form-group align-end">
-          <button class="btn btn-secondary" type="button" onclick="convertExpenseAmount()">Convert &amp; Fill Amount</button>
-        </div>
-      </div>
-      <div id="expenseFxNote" class="fx-note"></div>
-      <div class="form-group"><label>Amount (Saved Currency)</label><input type="number" id="fExpAmt" placeholder="0" /></div>
-      <div class="form-group"><label>Notes</label><textarea id="fExpNotes" placeholder="Optional notes..." style="min-height:60px;"></textarea></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modalAddExpense')">Cancel</button>
-      <button class="btn btn-primary" onclick="saveExpense()">Save</button>
-    </div>
-  </div>
-</div>
-
-<!-- Add Packing Item -->
-<div class="modal-overlay" id="modalAddPacking">
-  <div class="modal">
-    <div class="modal-head">
-      <h2>Add Packing Item 🎒</h2>
-      <button class="modal-close" onclick="closeModal('modalAddPacking')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="form-row">
-        <div class="form-group"><label>Item Name</label><input type="text" id="fPackItem" placeholder="e.g. Rain jacket" /></div>
-        <div class="form-group"><label>Category</label>
-          <select id="fPackCat">
-            <option>👕 Clothing</option><option>🔌 Electronics</option><option>💊 Health</option><option>📄 Documents</option><option>🧴 Toiletries</option><option>📌 Other</option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn btn-ghost" onclick="closeModal('modalAddPacking')">Cancel</button>
-      <button class="btn btn-primary" onclick="savePacking()">Add Item</button>
-    </div>
-  </div>
-</div>
-
 <!-- Toast container -->
 <div class="toast-container" id="toastContainer"></div>
 
@@ -2153,7 +1904,6 @@ let loadDaysToken = 0;
 let sidebarCollapsed = false;
 let lastSidebarDesktopState = window.innerWidth >= 1024;
 let currentUser = null;
-let userScopeColumnAvailable = null;
 let tableScopeSupport = {};
 let scopeDetectedForUserId = null;
 let authWarningShown = false;
@@ -2172,8 +1922,14 @@ const OFFLINE_CACHE_KEY = 'voyageur_offline_cache_v1';
 const OFFLINE_QUEUE_KEY = 'voyageur_sync_queue_v1';
 const SIDEBAR_COLLAPSE_KEY = 'voyageur_sidebar_collapsed_v1';
 const DB_TABLES = ['trips', 'days', 'activities', 'accommodations', 'transports', 'expenses', 'packing'];
+const PERF_LOG_ENABLED = window.__VOYAGEUR_PERF_LOG === true;
+const PERF_LOG_SLOW_MS = Number(window.__VOYAGEUR_PERF_SLOW_MS || 120);
+const ITINERARY_REMOTE_REFRESH_TTL_MS = Number(window.__VOYAGEUR_ITINERARY_REFRESH_TTL_MS || 60000);
 let offlineCache = createEmptyCache();
 let syncQueue = [];
+const perfTraceStore = [];
+const itineraryRemoteLoadAtByTrip = new Map();
+let lastItineraryRenderSignature = '';
 
 // ─── Config ──────────────────────────────────────────────────────────────
 function initApp() {
@@ -2236,6 +1992,34 @@ function safeJsArg(value) { return escapeJsString(value); }
 function makeDomId(prefix, value) {
   return `${prefix}${String(value ?? '').replace(/[^a-zA-Z0-9_-]/g, '_')}`;
 }
+
+function perfBegin(label, meta = null) {
+  if (!PERF_LOG_ENABLED || typeof performance === 'undefined') return null;
+  return { label, t0: performance.now(), meta: meta || null };
+}
+
+function perfEnd(trace, meta = null) {
+  if (!trace || typeof performance === 'undefined') return 0;
+  const ms = performance.now() - trace.t0;
+  const entry = {
+    label: trace.label,
+    ms: Number(ms.toFixed(1)),
+    at: new Date().toISOString(),
+    ...(trace.meta || {}),
+    ...(meta || {})
+  };
+  perfTraceStore.push(entry);
+  if (perfTraceStore.length > 80) perfTraceStore.shift();
+  window.__VOYAGEUR_LAST_PERF = perfTraceStore;
+  if (ms >= PERF_LOG_SLOW_MS || String(trace.label).startsWith('saveTrip') || String(trace.label).startsWith('openTrip')) {
+    console.log(`[Perf] ${trace.label}: ${entry.ms}ms`, entry);
+  }
+  return ms;
+}
+window.dumpVoyageurPerf = () => {
+  console.table(window.__VOYAGEUR_LAST_PERF || []);
+};
+
 function normalizeActivityCategory(value) {
   const cat = String(value || 'other').toLowerCase();
   return ['food', 'attraction', 'transport', 'hotel', 'other'].includes(cat) ? cat : 'other';
@@ -2341,7 +2125,6 @@ async function detectUserScopeCapability() {
   DB_TABLES.forEach(table => {
     tableScopeSupport[table] = ENABLE_USER_SCOPE && !!currentUser;
   });
-  userScopeColumnAvailable = ENABLE_USER_SCOPE && !!currentUser;
   scopeDetectedForUserId = scopeKey;
 
   if (!ENABLE_USER_SCOPE) {
@@ -2477,40 +2260,16 @@ function formatFxNote(fromCurrency, toCurrency, result) {
 }
 
 function updateSyncStatusBadge() {
-  const badge = document.getElementById('syncStatusBadge');
-  if (!badge) return;
-  const pending = syncQueue.length;
-  badge.classList.remove('online', 'offline', 'syncing');
-
-  if (syncInProgress) {
-    badge.classList.add('syncing');
-    badge.textContent = pending ? `Syncing ${pending}...` : 'Syncing...';
-    return;
-  }
-  if (!isOnline()) {
-    badge.classList.add('offline');
-    badge.textContent = pending ? `Offline · ${pending} pending` : 'Offline';
-    return;
-  }
-  if (pending > 0) {
-    badge.classList.add('syncing');
-    badge.textContent = `Online · ${pending} pending`;
-  } else {
-    badge.classList.add('online');
-    badge.textContent = 'Online';
-  }
+  // Online/offline status badge removed from UI.
 }
 
 function bindConnectivityEvents() {
   window.addEventListener('online', () => {
     offlineReadNotified = false;
-    updateSyncStatusBadge();
-    toast('Back online. Syncing changes...');
     syncPendingOperations();
   });
   window.addEventListener('offline', () => {
-    updateSyncStatusBadge();
-    toast('Offline mode: changes will sync later', 'error');
+    // Keep offline support silently without status notifications.
   });
 }
 
@@ -2703,8 +2462,22 @@ async function syncPendingOperations() {
 }
 
 // ─── DB helpers ──────────────────────────────────────────────────────────
-async function dbQuery(table, filters = {}) {
-  if (!requireAuthSession()) return [];
+async function dbQuery(table, filters = {}, options = {}) {
+  const { preferCache = false, skipRemote = false } = options || {};
+  const trace = perfBegin('dbQuery', { table, filterKeys: Object.keys(filters) });
+  if (!requireAuthSession()) {
+    perfEnd(trace, { source: 'blocked_auth', rows: 0 });
+    return [];
+  }
+  const cachedRows = getCachedRows(table, filters);
+  if (preferCache) {
+    perfEnd(trace, { source: 'cache_preferred', rows: cachedRows.length });
+    return cachedRows;
+  }
+  if (skipRemote) {
+    perfEnd(trace, { source: 'cache_skip_remote', rows: cachedRows.length });
+    return cachedRows;
+  }
   if (sbClient && isOnline()) {
     try {
       let q = applyUserScopeToQuery(sbClient.from(table).select('*'), table);
@@ -2715,27 +2488,40 @@ async function dbQuery(table, filters = {}) {
       const rows = applyQueuedOpsToRows(table, data || []);
       if (Object.keys(filters).length === 0) replaceCachedTable(table, rows);
       else mergeCachedRows(table, rows);
-      return getCachedRows(table, filters);
+      const output = getCachedRows(table, filters);
+      perfEnd(trace, { source: 'remote', rows: output.length });
+      return output;
     } catch (error) {
       if (!isNetworkError(error)) {
         console.error(error);
         toast('DB error: ' + error.message, 'error');
       } else if (!offlineReadNotified) {
-        toast('Offline mode: showing cached data', 'error');
         offlineReadNotified = true;
       }
     }
   }
-  return getCachedRows(table, filters);
+  perfEnd(trace, { source: 'cache', rows: cachedRows.length });
+  return cachedRows;
 }
 
-async function dbGetById(table, id) {
-  if (!requireAuthSession()) return null;
+async function dbGetById(table, id, options = {}) {
+  const { preferCache = true } = options || {};
+  const trace = perfBegin('dbGetById', { table, id, preferCache });
+  if (!requireAuthSession()) {
+    perfEnd(trace, { source: 'blocked_auth', found: false });
+    return null;
+  }
   const cached = getCachedById(table, id);
   const hasQueuedDelete = syncQueue.some(op => op.table === table && op.id === id && op.op === 'delete');
-  if (hasQueuedDelete) return null;
+  if (hasQueuedDelete) {
+    perfEnd(trace, { source: 'queued_delete', found: false });
+    return null;
+  }
   const hasQueuedLocal = syncQueue.some(op => op.table === table && op.id === id && op.op !== 'delete');
-  if (cached && hasQueuedLocal) return cached;
+  if (cached && (hasQueuedLocal || preferCache)) {
+    perfEnd(trace, { source: 'cache_preferred', found: true });
+    return cached;
+  }
 
   if (sbClient && isOnline()) {
     try {
@@ -2745,11 +2531,13 @@ async function dbGetById(table, id) {
       const rows = applyQueuedOpsToRows(table, data ? [data] : []);
       const row = rows.find(item => item.id === id) || null;
       if (row) upsertCachedRow(table, row);
+      perfEnd(trace, { source: 'remote', found: !!row });
       return row;
     } catch (error) {
       if (!isNetworkError(error)) toast('DB error: ' + error.message, 'error');
     }
   }
+  perfEnd(trace, { source: 'cache_fallback', found: !!cached });
   return cached;
 }
 
@@ -2783,6 +2571,50 @@ async function dbInsert(table, obj) {
     }
     toast('DB error: ' + error.message, 'error');
     return null;
+  }
+}
+
+async function dbInsertMany(table, rows) {
+  if (!requireAuthSession()) return [];
+  const inputRows = Array.isArray(rows) ? rows.filter(Boolean) : [];
+  if (!inputRows.length) return [];
+
+  const localRows = inputRows.map(row => {
+    const scoped = withUserScopePayload(table, row || {}, true);
+    return upsertCachedRow(table, { ...scoped, id: scoped?.id || makeClientId() });
+  });
+
+  if (!sbClient || !isOnline()) {
+    localRows.forEach(localRow => {
+      enqueueSyncOperation({ op: 'insert', table, id: localRow.id, payload: localRow });
+    });
+    return localRows;
+  }
+
+  try {
+    const payload = localRows.map(row => withUserScopePayload(table, row, true));
+    const { data, error } = await sbClient.from(table).upsert(payload, { onConflict: 'id' }).select();
+    if (error) throw error;
+    if (Array.isArray(data) && data.length) mergeCachedRows(table, data);
+    return Array.isArray(data) && data.length ? data : localRows;
+  } catch (error) {
+    if (isNetworkError(error)) {
+      localRows.forEach(localRow => {
+        enqueueSyncOperation({ op: 'insert', table, id: localRow.id, payload: localRow });
+      });
+      updateSyncStatusBadge();
+      return localRows;
+    }
+
+    localRows.forEach(localRow => removeCachedRow(table, localRow.id));
+    const msg = String(error?.message || '');
+    if (!ENABLE_USER_SCOPE && !SHARED_USER_ID && /user_id|null value/i.test(msg)) {
+      toast('DB requires user_id. Set window.__VOYAGEUR_SHARED_USER_ID to an auth.users UUID.', 'error');
+      console.error('Bulk insert blocked: missing shared user id for user_id-protected schema.', error);
+      return [];
+    }
+    toast('DB error: ' + error.message, 'error');
+    return [];
   }
 }
 
@@ -2856,18 +2688,6 @@ function showPanel(name) {
   if (name === 'settings') { document.querySelectorAll('.nav-item')[2].classList.add('active'); }
 }
 
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(t => t.classList.remove('active'));
-  document.querySelector(`.tab[onclick="switchTab('${name}')"]`)?.classList.add('active');
-  document.getElementById(`tab-${name}`)?.classList.add('active');
-  if (name === 'itinerary') loadDays();
-  if (name === 'accommodation') loadAccom();
-  if (name === 'transport') loadTransport();
-  if (name === 'budget') loadBudget();
-  if (name === 'packing') loadPacking();
-}
-
 // ─── Dashboard ───────────────────────────────────────────────────────────
 async function loadDashboard() {
   const trips = await dbQuery('trips');
@@ -2909,15 +2729,293 @@ function renderTripsGrid(trips) {
   }).join('');
 }
 
+function formatDateTime(value) {
+  if (!value) return '-';
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return String(value).replace('T', ' ');
+  return date.toLocaleString(undefined, {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
+}
+
+function buildTripPdfHtml(payload) {
+  const {
+    trip,
+    days,
+    activities,
+    accommodations,
+    transports,
+    expenses,
+    packing,
+    totalExpense
+  } = payload;
+  const tripCurrency = trip?.currency || currency || 'MYR';
+  const activitiesByDay = new Map();
+  (activities || []).forEach(item => {
+    if (!activitiesByDay.has(item.day_id)) activitiesByDay.set(item.day_id, []);
+    activitiesByDay.get(item.day_id).push(item);
+  });
+  for (const list of activitiesByDay.values()) {
+    list.sort((a, b) => String(a.time || '').localeCompare(String(b.time || '')));
+  }
+
+  const dayBlocks = (days || []).map(day => {
+    const dayActivities = activitiesByDay.get(day.id) || [];
+    const defaultTitle = `Day ${Number(day.day_number) || 0}`.trim().toLowerCase();
+    const enteredTitle = String(day.title || '').trim();
+    const displayTitle = enteredTitle && enteredTitle.toLowerCase() !== defaultTitle ? enteredTitle : '';
+    const activityHtml = dayActivities.length
+      ? dayActivities.map(item => `
+        <div class="row">
+          <div class="time">${safeText(item.time || '--:--')}</div>
+          <div class="name">${safeText(item.title || 'Untitled Activity')}</div>
+          <div class="detail">${safeText(item.category || 'other')}</div>
+          <div class="detail">${item.location ? `📍 ${safeText(item.location)}` : ''}</div>
+          <div class="detail">${item.cost ? `${safeText(tripCurrency)} ${Number(item.cost || 0).toLocaleString()}` : ''}</div>
+        </div>
+      `).join('')
+      : '<div class="empty">No activities</div>';
+    return `
+      <section class="card">
+        <h3>Day ${Number(day.day_number) || 0} · ${safeText(formatDate(day.date))}</h3>
+        ${displayTitle ? `<div class="subtitle">${safeText(displayTitle)}</div>` : ''}
+        <div class="rows">${activityHtml}</div>
+      </section>
+    `;
+  }).join('');
+
+  const accomHtml = (accommodations || []).length
+    ? accommodations.map(item => `
+      <div class="row">
+        <div class="name">${safeText(item.name || 'Accommodation')}</div>
+        <div class="detail">${safeText(item.address || '-')}</div>
+        <div class="detail">${item.check_in ? `Check-in: ${safeText(formatDate(item.check_in))}` : ''}</div>
+        <div class="detail">${item.check_out ? `Check-out: ${safeText(formatDate(item.check_out))}` : ''}</div>
+      </div>
+    `).join('')
+    : '<div class="empty">No accommodation records</div>';
+
+  const transportHtml = (transports || []).length
+    ? transports.map(item => `
+      <div class="row">
+        <div class="name">${safeText(item.type || 'Transport')}</div>
+        <div class="detail">${safeText(item.from_location || '-')} → ${safeText(item.to_location || '-')}</div>
+        <div class="detail">Dep: ${safeText(formatDateTime(item.departure))} · Arr: ${safeText(formatDateTime(item.arrival))}</div>
+      </div>
+    `).join('')
+    : '<div class="empty">No transport records</div>';
+
+  const expenseHtml = (expenses || []).length
+    ? expenses.map(item => `
+      <div class="row">
+        <div class="name">${safeText(item.item || 'Expense')}</div>
+        <div class="detail">${safeText(item.category || '')}</div>
+        <div class="detail">${safeText(formatDate(item.date))}</div>
+        <div class="detail">${safeText(tripCurrency)} ${Number(item.amount || 0).toLocaleString()}</div>
+      </div>
+    `).join('')
+    : '<div class="empty">No expenses recorded</div>';
+
+  const packByCategory = {};
+  (packing || []).forEach(item => {
+    const key = String(item.category || 'Other');
+    if (!packByCategory[key]) packByCategory[key] = [];
+    packByCategory[key].push(item);
+  });
+  const packingHtml = Object.keys(packByCategory).length
+    ? Object.entries(packByCategory).map(([cat, items]) => `
+      <section class="card">
+        <h3>${safeText(cat)}</h3>
+        <div class="rows">
+          ${items.map(item => `<div class="row"><div class="name">${item.packed ? '✓' : '•'} ${safeText(item.item || '')}</div></div>`).join('')}
+        </div>
+      </section>
+    `).join('')
+    : '<div class="empty">No packing items</div>';
+
+  const dayCount = trip?.start_date && trip?.end_date
+    ? Math.ceil((new Date(trip.end_date) - new Date(trip.start_date)) / (1000 * 60 * 60 * 24)) + 1
+    : (days || []).length;
+
+  return `<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>${safeText(trip?.name || 'Trip')} - Export</title>
+  <style>
+    body { font-family: 'DM Sans', Arial, sans-serif; margin: 0; color: #1a1a1a; background: #ffffff; }
+    .wrap { max-width: 900px; margin: 0 auto; padding: 24px; }
+    .head { background: #1a4a2e; color: #ffffff; border-radius: 12px; padding: 20px; }
+    .head h1 { margin: 0 0 8px; font-family: 'Playfair Display', Georgia, serif; font-size: 34px; }
+    .head p { margin: 0; color: #f0ebe5; font-size: 14px; }
+    .meta { margin-top: 12px; color: #c9a84c; font-weight: 600; }
+    .section-title { margin: 24px 0 10px; font-size: 20px; font-family: 'Playfair Display', Georgia, serif; }
+    .card { border: 1px solid #f0ebe5; border-radius: 10px; padding: 14px; margin-bottom: 10px; background: #ffffff; }
+    .card h3 { margin: 0 0 8px; font-size: 17px; color: #1a4a2e; }
+    .subtitle { margin-bottom: 8px; color: #666; font-size: 14px; }
+    .rows { display: grid; gap: 8px; }
+    .row { border-top: 1px solid #f0ebe5; padding-top: 8px; }
+    .row:first-child { border-top: 0; padding-top: 0; }
+    .time { color: #666; font-size: 13px; margin-bottom: 2px; }
+    .name { font-size: 15px; font-weight: 600; }
+    .detail { color: #525252; font-size: 13px; }
+    .empty { color: #777; font-style: italic; font-size: 14px; }
+    .summary { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px; margin-top: 14px; }
+    .pill { border: 1px solid #f0ebe5; border-radius: 8px; padding: 10px; }
+    .pill .k { color: #666; font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .pill .v { font-weight: 700; margin-top: 4px; }
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .wrap { padding: 12px; }
+      .card { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="head">
+      <h1>${safeText(trip?.flag || '🌍')} ${safeText(trip?.name || 'Untitled Trip')}</h1>
+      <p>${safeText(trip?.destination || '')}</p>
+      <div class="meta">${safeText(formatDate(trip?.start_date))} → ${safeText(formatDate(trip?.end_date))} · ${dayCount} days</div>
+      <div class="summary">
+        <div class="pill"><div class="k">Budget</div><div class="v">${safeText(tripCurrency)} ${Number(trip?.budget || 0).toLocaleString()}</div></div>
+        <div class="pill"><div class="k">Spent</div><div class="v">${safeText(tripCurrency)} ${Number(totalExpense || 0).toLocaleString()}</div></div>
+        <div class="pill"><div class="k">Generated</div><div class="v">${safeText(formatDate(new Date().toISOString().slice(0, 10)))}</div></div>
+      </div>
+    </div>
+
+    <div class="section-title">Itinerary</div>
+    ${dayBlocks || '<div class="empty">No days available</div>'}
+
+    <div class="section-title">Accommodation</div>
+    <section class="card"><div class="rows">${accomHtml}</div></section>
+
+    <div class="section-title">Transport</div>
+    <section class="card"><div class="rows">${transportHtml}</div></section>
+
+    <div class="section-title">Expenses</div>
+    <section class="card"><div class="rows">${expenseHtml}</div></section>
+
+    <div class="section-title">Packing</div>
+    ${packingHtml}
+  </div>
+</body>
+</html>`;
+}
+
+async function exportCurrentTripToPdf() {
+  if (!currentTripId) {
+    toast('Open a trip first', 'error');
+    return;
+  }
+  const printWindow = window.open('', '_blank');
+  if (!printWindow) {
+    toast('Popup blocked. Please allow popups for PDF export.', 'error');
+    return;
+  }
+
+  printWindow.document.open();
+  printWindow.document.write('<!doctype html><html><head><title>Preparing export...</title></head><body style="font-family:DM Sans,Arial,sans-serif;padding:24px;">Preparing trip export...</body></html>');
+  printWindow.document.close();
+
+  try {
+    const trip = currentTripData
+      || await dbGetById('trips', currentTripId, { preferCache: true })
+      || await dbGetById('trips', currentTripId, { preferCache: false });
+    if (!trip) throw new Error('Trip not found');
+
+    let [daysRaw, activitiesRaw, accommodationsRaw, transportsRaw, expensesRaw, packingRaw] = await Promise.all([
+      dbQuery('days', { trip_id: currentTripId }, { preferCache: true }),
+      dbQuery('activities', { trip_id: currentTripId }, { preferCache: true }),
+      dbQuery('accommodations', { trip_id: currentTripId }, { preferCache: true }),
+      dbQuery('transports', { trip_id: currentTripId }, { preferCache: true }),
+      dbQuery('expenses', { trip_id: currentTripId }, { preferCache: true }),
+      dbQuery('packing', { trip_id: currentTripId }, { preferCache: true })
+    ]);
+
+    const cacheCold = [
+      daysRaw,
+      activitiesRaw,
+      accommodationsRaw,
+      transportsRaw,
+      expensesRaw,
+      packingRaw
+    ].every(list => Array.isArray(list) && list.length === 0);
+
+    if (isOnline()) {
+      if (cacheCold) {
+        [daysRaw, activitiesRaw, accommodationsRaw, transportsRaw, expensesRaw, packingRaw] = await Promise.all([
+          dbQuery('days', { trip_id: currentTripId }),
+          dbQuery('activities', { trip_id: currentTripId }),
+          dbQuery('accommodations', { trip_id: currentTripId }),
+          dbQuery('transports', { trip_id: currentTripId }),
+          dbQuery('expenses', { trip_id: currentTripId }),
+          dbQuery('packing', { trip_id: currentTripId })
+        ]);
+      } else {
+        if (!daysRaw.length) daysRaw = await dbQuery('days', { trip_id: currentTripId });
+        if (!activitiesRaw.length) activitiesRaw = await dbQuery('activities', { trip_id: currentTripId });
+      }
+    }
+
+    const days = [...daysRaw].sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
+    const dayIdSet = new Set(days.map(item => item.id));
+    const activities = (activitiesRaw || []).filter(item => dayIdSet.has(item.day_id));
+    const accommodations = [...(accommodationsRaw || [])];
+    const transports = [...(transportsRaw || [])];
+    const expenses = [...(expensesRaw || [])].sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
+    const packing = [...(packingRaw || [])];
+    const totalExpense = expenses.reduce((sum, item) => sum + Number(item.amount || 0), 0);
+
+    const html = buildTripPdfHtml({
+      trip,
+      days,
+      activities,
+      accommodations,
+      transports,
+      expenses,
+      packing,
+      totalExpense
+    });
+
+    printWindow.document.open();
+    printWindow.document.write(html);
+    printWindow.document.close();
+    setTimeout(() => {
+      printWindow.focus();
+      printWindow.print();
+    }, 300);
+  } catch (error) {
+    printWindow.close();
+    toast(`Export failed: ${error.message}`, 'error');
+  }
+}
+
 // ─── Trip Detail ─────────────────────────────────────────────────────────
-async function openTrip(tripId) {
+async function openTrip(tripId, options = {}) {
+  const { preferCache = true, backgroundRefresh = true, disableLegacyActivityFallback = true } = options || {};
+  const trace = perfBegin('openTrip', { tripId });
   closeSidebarOnMobile();
   currentTripId = tripId;
   expandedDayIds.clear();
   itineraryCategoryFilter = 'all';
-  const trips = await dbQuery('trips');
+  const fetchTrace = perfBegin('openTrip.fetchTrips', { tripId });
+  let trips = await dbQuery('trips', {}, { preferCache });
+  perfEnd(fetchTrace, { tripCount: trips.length });
   currentTripData = trips.find(t => t.id === tripId);
-  if (!currentTripData) return;
+  if (!currentTripData && preferCache) {
+    trips = await dbQuery('trips');
+    currentTripData = trips.find(t => t.id === tripId);
+  }
+  if (!currentTripData) {
+    perfEnd(trace, { status: 'missing_trip' });
+    return;
+  }
 
   const days = currentTripData.end_date && currentTripData.start_date
     ? Math.ceil((new Date(currentTripData.end_date)-new Date(currentTripData.start_date))/(1000*60*60*24))+1
@@ -2944,17 +3042,26 @@ async function openTrip(tripId) {
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-trip').classList.add('active');
   document.getElementById('topbarTitle').textContent = currentTripData.name;
-  document.getElementById('topbarActions').innerHTML = '';
+  document.getElementById('topbarActions').innerHTML = '<button class="btn btn-secondary" onclick="exportCurrentTripToPdf()">Export PDF</button>';
 
-  // Reset tabs
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  // Ensure itinerary panel is visible.
   document.querySelectorAll('.tab-panel').forEach(t => t.classList.remove('active'));
-  const firstTab = document.querySelector('.tab');
-  if (firstTab) firstTab.classList.add('active');
   document.getElementById('tab-itinerary').classList.add('active');
 
   renderSidebar(trips);
-  loadDays();
+  const daysTrace = perfBegin('openTrip.loadDays', { tripId });
+  await loadDays({ preferCache, allowLegacyFallback: !disableLegacyActivityFallback });
+  perfEnd(daysTrace, { tripId });
+  if (backgroundRefresh) {
+    setTimeout(() => {
+      loadDays({
+        preferCache: false,
+        allowLegacyFallback: !disableLegacyActivityFallback,
+        skipRemoteIfFresh: true
+      });
+    }, 0);
+  }
+  perfEnd(trace, { status: 'ok' });
 }
 
 async function deleteTrip(id) {
@@ -3025,30 +3132,102 @@ function toggleActivityActionsMenu(activityId, event) {
   menuWrap.classList.add('open');
 }
 
-async function loadDays() {
+function buildItineraryRenderSignature(days, activities, filterValue) {
+  const dayPart = (days || []).map(d => [
+    d?.id || '',
+    Number(d?.day_number || 0),
+    d?.date || '',
+    d?.title || ''
+  ].join('|')).join('~');
+
+  const sortedActivities = [...(activities || [])].sort((a, b) => {
+    const dayCmp = String(a?.day_id || '').localeCompare(String(b?.day_id || ''));
+    if (dayCmp !== 0) return dayCmp;
+    const timeCmp = String(a?.time || '').localeCompare(String(b?.time || ''));
+    if (timeCmp !== 0) return timeCmp;
+    return String(a?.id || '').localeCompare(String(b?.id || ''));
+  });
+
+  const actPart = sortedActivities.map(a => [
+    a?.id || '',
+    a?.day_id || '',
+    a?.time || '',
+    a?.category || '',
+    a?.title || '',
+    a?.description || '',
+    a?.location || '',
+    Number(a?.cost || 0)
+  ].join('|')).join('~');
+
+  return `${currentTripId || ''}::${filterValue || 'all'}::${dayPart}::${actPart}`;
+}
+
+async function loadDays(options = {}) {
+  const { preferCache = false, allowLegacyFallback = false, skipRemoteIfFresh = false } = options || {};
+  const trace = perfBegin('loadDays', { tripId: currentTripId, filter: itineraryCategoryFilter });
   closeAllActionMenus();
   const requestToken = ++loadDaysToken;
-  const [days, tripActivitiesRaw] = await Promise.all([
-    dbQuery('days', { trip_id: currentTripId }),
-    dbQuery('activities', { trip_id: currentTripId })
-  ]);
-  if (requestToken !== loadDaysToken) return;
 
+  const lastRemoteAt = itineraryRemoteLoadAtByTrip.get(currentTripId) || 0;
+  const remoteFresh = !!lastRemoteAt && (Date.now() - lastRemoteAt < ITINERARY_REMOTE_REFRESH_TTL_MS);
+  const forceCacheOnly = !preferCache && skipRemoteIfFresh && remoteFresh;
+  const queryOptions = forceCacheOnly
+    ? { skipRemote: true }
+    : { preferCache };
+
+  const queryTrace = perfBegin('loadDays.initialQueries', { tripId: currentTripId });
+  const [days, tripActivitiesRaw] = await Promise.all([
+    dbQuery('days', { trip_id: currentTripId }, queryOptions),
+    dbQuery('activities', { trip_id: currentTripId }, queryOptions)
+  ]);
+  perfEnd(queryTrace, { days: days.length, tripActivitiesRaw: tripActivitiesRaw.length });
+  if (!preferCache && !forceCacheOnly) itineraryRemoteLoadAtByTrip.set(currentTripId, Date.now());
+  if (requestToken !== loadDaysToken) {
+    perfEnd(trace, { status: 'stale_request' });
+    return;
+  }
+
+  const renderTrace = perfBegin('loadDays.render', { tripId: currentTripId });
   days.sort((a,b) => (a.day_number||0) - (b.day_number||0));
   const container = document.getElementById('daysContainer');
   updateItineraryFilterUI();
 
   if (!days.length) {
     container.innerHTML = `<div class="empty-state"><div class="e-icon">📅</div><h3>No days added yet</h3><p>Start building your day-by-day itinerary.</p></div>`;
+    lastItineraryRenderSignature = `${currentTripId || ''}::${itineraryCategoryFilter || 'all'}::empty`;
+    perfEnd(renderTrace, { renderedDays: 0, renderedActivities: 0 });
+    perfEnd(trace, { status: 'empty_days' });
     return;
   }
 
   const dayIdSet = new Set(days.map(d => d.id));
   let tripActivities = tripActivitiesRaw.filter(a => dayIdSet.has(a.day_id));
-  if (!tripActivities.length && dayIdSet.size) {
-    const allActivities = await dbQuery('activities');
-    if (requestToken !== loadDaysToken) return;
-    tripActivities = allActivities.filter(a => dayIdSet.has(a.day_id));
+  if (!tripActivities.length && dayIdSet.size && allowLegacyFallback) {
+    const dayIds = Array.from(dayIdSet);
+    if (sbClient && isOnline()) {
+      try {
+        const fallbackTrace = perfBegin('loadDays.activitiesFallbackQuery', { dayIdCount: dayIds.length });
+        let q = applyUserScopeToQuery(sbClient.from('activities').select('*'), 'activities');
+        q = q.in('day_id', dayIds).order('created_at', { ascending: true });
+        const { data, error } = await q;
+        if (error) throw error;
+        if (requestToken !== loadDaysToken) {
+          perfEnd(trace, { status: 'stale_request' });
+          return;
+        }
+        tripActivities = Array.isArray(data) ? data : [];
+        mergeCachedRows('activities', tripActivities);
+        perfEnd(fallbackTrace, { rows: tripActivities.length, source: 'remote' });
+      } catch (error) {
+        if (!isNetworkError(error)) {
+          console.error(error);
+          toast('DB error: ' + error.message, 'error');
+        }
+      }
+    }
+    if (!tripActivities.length) {
+      tripActivities = getCachedRows('activities').filter(a => dayIdSet.has(a.day_id));
+    }
   }
 
   const activitiesByDay = new Map();
@@ -3058,6 +3237,13 @@ async function loadDays() {
   }
   for (const list of activitiesByDay.values()) {
     list.sort((a, b) => (a.time || '').localeCompare(b.time || ''));
+  }
+
+  const signature = buildItineraryRenderSignature(days, tripActivities, itineraryCategoryFilter);
+  if (!preferCache && signature === lastItineraryRenderSignature) {
+    perfEnd(renderTrace, { skipped: true, reason: 'unchanged_signature', renderedDays: days.length, renderedActivities: tripActivities.length });
+    perfEnd(trace, { status: 'unchanged', totalDays: days.length, totalActivities: tripActivities.length });
+    return;
   }
 
   let html = '';
@@ -3133,9 +3319,15 @@ async function loadDays() {
   }
   if (!html) {
     container.innerHTML = `<div class="empty-state"><div class="e-icon">🔎</div><h3>No activities in this category</h3><p>Choose another category filter or add an activity.</p></div>`;
+    lastItineraryRenderSignature = signature;
+    perfEnd(renderTrace, { renderedDays: 0, renderedActivities: 0, filteredEmpty: true });
+    perfEnd(trace, { status: 'filtered_empty', totalDays: days.length, totalActivities: tripActivities.length });
     return;
   }
   container.innerHTML = html;
+  lastItineraryRenderSignature = signature;
+  perfEnd(renderTrace, { renderedDays: days.length, renderedActivities: tripActivities.length });
+  perfEnd(trace, { status: 'ok', totalDays: days.length, totalActivities: tripActivities.length });
 }
 
 function setItineraryFilter(category) {
@@ -3177,134 +3369,6 @@ async function deleteActivity(id) {
   await dbDelete('activities', id); loadDays();
 }
 
-// ─── Accommodation ────────────────────────────────────────────────────────
-async function loadAccom() {
-  const rows = await dbQuery('accommodations', { trip_id: currentTripId });
-  const el = document.getElementById('accomContainer');
-  if (!rows.length) { el.innerHTML = `<div class="empty-state"><div class="e-icon">🏨</div><h3>No accommodation added</h3></div>`; return; }
-  el.innerHTML = rows.map(r => `
-    <div class="info-card">
-      <div class="info-card-left">
-        <h3>🏨 ${safeText(r.name || 'Untitled')}</h3>
-        <p>${safeText(r.address||'')}</p>
-        <div class="info-card-meta">
-          ${r.check_in?`<span class="meta-pill">Check-in: ${formatDate(r.check_in)}</span>`:''}
-          ${r.check_out?`<span class="meta-pill">Check-out: ${formatDate(r.check_out)}</span>`:''}
-          ${r.confirmation?`<span class="meta-pill">Conf: ${safeText(r.confirmation)}</span>`:''}
-          ${r.cost?`<span class="meta-pill" style="color:var(--terracotta);">${safeText(currentTripData?.currency||currency)} ${Number(r.cost).toLocaleString()}</span>`:''}
-        </div>
-        ${r.notes?`<p style="margin-top:8px;font-size:13px;color:var(--mist);">${safeText(r.notes)}</p>`:''}
-      </div>
-      <button class="btn btn-danger btn-sm" onclick="deleteAccom('${safeJsArg(r.id)}')">Remove</button>
-    </div>`).join('');
-}
-
-async function deleteAccom(id) { await dbDelete('accommodations',id); loadAccom(); }
-
-// ─── Transport ────────────────────────────────────────────────────────────
-async function loadTransport() {
-  const rows = await dbQuery('transports', { trip_id: currentTripId });
-  const el = document.getElementById('transportContainer');
-  if (!rows.length) { el.innerHTML = `<div class="empty-state"><div class="e-icon">🚌</div><h3>No transport added</h3></div>`; return; }
-  el.innerHTML = rows.map(r => `
-    <div class="info-card">
-      <div class="info-card-left">
-        <h3>${safeText(r.type || 'Transport')}</h3>
-        <p>${safeText(r.from_location || '')} → ${safeText(r.to_location || '')}</p>
-        <div class="info-card-meta">
-          ${r.departure?`<span class="meta-pill">Dep: ${safeText(r.departure.replace('T',' '))}</span>`:''}
-          ${r.arrival?`<span class="meta-pill">Arr: ${safeText(r.arrival.replace('T',' '))}</span>`:''}
-          ${r.operator?`<span class="meta-pill">${safeText(r.operator)}</span>`:''}
-          ${r.confirmation?`<span class="meta-pill">Conf: ${safeText(r.confirmation)}</span>`:''}
-          ${r.cost?`<span class="meta-pill" style="color:var(--terracotta);">${safeText(currentTripData?.currency||currency)} ${Number(r.cost).toLocaleString()}</span>`:''}
-        </div>
-        ${r.notes?`<p style="margin-top:8px;font-size:13px;color:var(--mist);">${safeText(r.notes)}</p>`:''}
-      </div>
-      <button class="btn btn-danger btn-sm" onclick="deleteTransport('${safeJsArg(r.id)}')">Remove</button>
-    </div>`).join('');
-}
-async function deleteTransport(id) { await dbDelete('transports',id); loadTransport(); }
-
-// ─── Budget ───────────────────────────────────────────────────────────────
-async function loadBudget() {
-  const expenses = await dbQuery('expenses', { trip_id: currentTripId });
-  const budget = Number(currentTripData?.budget || 0);
-  const spent = expenses.reduce((s,e) => s + Number(e.amount||0), 0);
-  const pct = budget ? Math.min(100, Math.round(spent/budget*100)) : 0;
-  const cur = currentTripData?.currency || currency;
-
-  document.getElementById('budgetOverview').innerHTML = `
-    <div class="budget-box">
-      <div class="b-label">Total Budget</div>
-      <div class="b-val">${safeText(cur)} ${budget.toLocaleString()}</div>
-    </div>
-    <div class="budget-box">
-      <div class="b-label">Total Spent</div>
-      <div class="b-val ${spent > budget ? 'over' : ''}">${safeText(cur)} ${spent.toLocaleString()}</div>
-      <div class="progress-bar"><div class="progress-fill ${pct > 90 ? 'warn' : ''}" style="width:${pct}%"></div></div>
-      <div style="font-size:12px;color:var(--mist);margin-top:6px;font-family:'DM Sans',sans-serif;">${pct}% used · ${safeText(cur)} ${Math.max(0,budget-spent).toLocaleString()} remaining</div>
-    </div>`;
-
-  const tbody = document.getElementById('expenseBody');
-  if (!expenses.length) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--mist);font-style:italic;">No expenses recorded yet</td></tr>`; return; }
-  tbody.innerHTML = expenses.map(e => `
-    <tr>
-      <td data-label="Item">${safeText(e.item || '')}</td>
-      <td data-label="Category">${safeText(e.category || '')}</td>
-      <td data-label="Date">${formatDate(e.date)}</td>
-      <td data-label="Amount" style="color:var(--terracotta);font-family:'DM Sans',sans-serif;">${safeText(cur)} ${Number(e.amount||0).toLocaleString()}</td>
-      <td data-label="Action"><button class="btn btn-danger btn-sm" onclick="deleteExpense('${safeJsArg(e.id)}')">✕</button></td>
-    </tr>`).join('');
-}
-async function deleteExpense(id) { await dbDelete('expenses',id); loadBudget(); }
-
-// ─── Packing ──────────────────────────────────────────────────────────────
-const packCategories = ['📄 Documents','👕 Clothing','🔌 Electronics','💊 Health','🧴 Toiletries','📌 Other'];
-const defaultItems = {
-  '📄 Documents': ['Passport','Visa/Entry docs','Travel insurance','Hotel confirmation','Flight tickets','Emergency contacts'],
-  '👕 Clothing': ['T-shirts','Pants/Shorts','Underwear','Socks','Walking shoes','Light jacket','Swimwear'],
-  '🔌 Electronics': ['Phone charger','Power adapter','Portable charger','Camera','Headphones'],
-  '💊 Health': ['Prescription meds','Paracetamol','Sunscreen','Insect repellent','Hand sanitizer','First aid kit'],
-  '🧴 Toiletries': ['Toothbrush & paste','Shampoo','Deodorant','Razor','Moisturiser'],
-  '📌 Other': ['Reusable water bottle','Snacks','Umbrella','Books/Kindle','Travel pillow']
-};
-
-async function loadPacking() {
-  let items = await dbQuery('packing', { trip_id: currentTripId });
-  // Seed defaults if empty
-  if (!items.length) {
-    for (const [cat, list] of Object.entries(defaultItems)) {
-      for (const item of list) {
-        const row = await dbInsert('packing', { trip_id: currentTripId, item, category: cat, packed: false });
-        if (row) items.push(row);
-      }
-    }
-  }
-
-  const grouped = {};
-  for (const cat of packCategories) grouped[cat] = [];
-  for (const i of items) { if (!grouped[i.category]) grouped[i.category] = []; grouped[i.category].push(i); }
-
-  const el = document.getElementById('packingGrid');
-  el.innerHTML = packCategories.map(cat => {
-    const its = grouped[cat] || [];
-    const done = its.filter(i=>i.packed).length;
-    return `<div class="checklist-card">
-      <h3>${safeText(cat)} <small style="font-size:12px;color:var(--mist);font-family:'DM Sans',sans-serif;">${done}/${its.length}</small></h3>
-      ${its.map(i => `
-        <div class="check-item ${i.packed?'checked':''}" onclick="togglePack('${safeJsArg(i.id)}',${!i.packed})">
-          <input type="checkbox" ${i.packed?'checked':''} onchange="togglePack('${safeJsArg(i.id)}',this.checked)" onclick="event.stopPropagation()" />
-          ${safeText(i.item)}
-        </div>`).join('')}
-    </div>`;
-  }).join('');
-}
-
-async function togglePack(id, packed) {
-  await dbUpdate('packing', id, { packed });
-  loadPacking();
-}
-
 // ─── Modals ───────────────────────────────────────────────────────────────
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
@@ -3331,7 +3395,7 @@ function openNewTripModal() {
 }
 
 async function openEditTripModal(tripId) {
-  const trip = await dbGetById('trips', tripId);
+  const trip = await dbGetById('trips', tripId, { preferCache: true });
   if (!trip) return;
   document.getElementById('fTripId').value = trip.id;
   document.getElementById('fTripName').value = trip.name || '';
@@ -3359,13 +3423,26 @@ function appendDestinationSeparator() {
   input.focus();
 }
 
-async function syncTripDaysToRange(tripId, startDate, endDate) {
-  if (!startDate || !endDate) return { added: 0 };
+async function syncTripDaysToRange(tripId, startDate, endDate, options = {}) {
+  const { skipExistingLookup = false } = options || {};
+  const trace = perfBegin('saveTrip.syncTripDaysToRange', { tripId, startDate, endDate });
+  if (!startDate || !endDate) {
+    perfEnd(trace, { status: 'missing_dates', added: 0 });
+    return { added: 0 };
+  }
   const start = new Date(`${startDate}T00:00:00Z`);
   const end = new Date(`${endDate}T00:00:00Z`);
-  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end < start) return { added: 0 };
+  if (Number.isNaN(start.getTime()) || Number.isNaN(end.getTime()) || end < start) {
+    perfEnd(trace, { status: 'invalid_range', added: 0 });
+    return { added: 0 };
+  }
 
-  const existingDays = await dbQuery('days', { trip_id: tripId });
+  let existingDays = [];
+  if (!skipExistingLookup) {
+    const fetchTrace = perfBegin('saveTrip.syncTripDaysToRange.fetchExistingDays', { tripId });
+    existingDays = await dbQuery('days', { trip_id: tripId });
+    perfEnd(fetchTrace, { existingDays: existingDays.length });
+  }
   const existingByDate = new Map();
   const existingByNumber = new Map();
   for (const day of existingDays) {
@@ -3376,7 +3453,8 @@ async function syncTripDaysToRange(tripId, startDate, endDate) {
 
   const dayMs = 24 * 60 * 60 * 1000;
   const count = Math.floor((end.getTime() - start.getTime()) / dayMs) + 1;
-  let added = 0;
+  const toInsert = [];
+  const toUpdate = [];
 
   for (let i = 0; i < count; i++) {
     const date = new Date(start.getTime() + (i * dayMs)).toISOString().slice(0, 10);
@@ -3389,27 +3467,41 @@ async function syncTripDaysToRange(tripId, startDate, endDate) {
     if (existing) {
       usedDayIds.add(existing.id);
       if ((existing.day_number || 0) !== dayNumber || existing.date !== date) {
-        await dbUpdate('days', existing.id, { day_number: dayNumber, date });
+        toUpdate.push({ id: existing.id, patch: { day_number: dayNumber, date } });
       }
     } else {
-      await dbInsert('days', {
+      toInsert.push({
         trip_id: tripId,
         day_number: dayNumber,
         date,
         title: `Day ${dayNumber}`,
         notes: ''
       });
-      added++;
     }
   }
 
-  return { added };
+  for (const row of toUpdate) {
+    await dbUpdate('days', row.id, row.patch);
+  }
+  if (toInsert.length) {
+    const insertTrace = perfBegin('saveTrip.syncTripDaysToRange.bulkInsertDays', { count: toInsert.length });
+    await dbInsertMany('days', toInsert);
+    perfEnd(insertTrace, { count: toInsert.length });
+  }
+
+  perfEnd(trace, { status: 'ok', added: toInsert.length, updated: toUpdate.length });
+  return { added: toInsert.length };
 }
 
 async function saveTrip() {
+  const trace = perfBegin('saveTrip.total');
   const tripId = document.getElementById('fTripId').value;
   const name = document.getElementById('fTripName').value.trim();
-  if (!name) { toast('Please enter a trip name', 'error'); return; }
+  if (!name) {
+    perfEnd(trace, { status: 'validation_error', reason: 'missing_name' });
+    toast('Please enter a trip name', 'error');
+    return;
+  }
   const obj = {
     name, destination: document.getElementById('fTripDest').value,
     flag: document.getElementById('fTripFlag').value,
@@ -3421,46 +3513,43 @@ async function saveTrip() {
   };
 
   if (obj.start_date && obj.end_date && obj.end_date < obj.start_date) {
+    perfEnd(trace, { status: 'validation_error', reason: 'invalid_date_range' });
     toast('End date cannot be before start date', 'error');
     return;
   }
 
   if (tripId) {
+    const updateTrace = perfBegin('saveTrip.updateTripRow', { tripId });
     const ok = await dbUpdate('trips', tripId, obj);
-    if (!ok) return;
+    perfEnd(updateTrace, { ok: !!ok });
+    if (!ok) {
+      perfEnd(trace, { status: 'update_failed', tripId });
+      return;
+    }
     const { added } = await syncTripDaysToRange(tripId, obj.start_date, obj.end_date);
     closeTripModal();
     toast(added ? `Trip updated! ${added} day(s) added.` : 'Trip updated!');
-    loadDashboard();
-    openTrip(tripId);
+    const openTrace = perfBegin('saveTrip.openTripAfterUpdate', { tripId });
+    await openTrip(tripId, { preferCache: true, backgroundRefresh: true, disableLegacyActivityFallback: true });
+    perfEnd(openTrace, { tripId });
+    perfEnd(trace, { status: 'updated', addedDays: added, tripId });
     return;
   }
 
+  const insertTrace = perfBegin('saveTrip.insertTripRow');
   const row = await dbInsert('trips', obj);
-  if (!row) return;
-  const { added } = await syncTripDaysToRange(row.id, obj.start_date, obj.end_date);
+  perfEnd(insertTrace, { ok: !!row, tripId: row?.id || null });
+  if (!row) {
+    perfEnd(trace, { status: 'create_failed' });
+    return;
+  }
+  const { added } = await syncTripDaysToRange(row.id, obj.start_date, obj.end_date, { skipExistingLookup: true });
   closeTripModal();
   toast(added ? `Trip created! ${added} day(s) added.` : 'Trip created! ✈️');
-  loadDashboard();
-  openTrip(row.id);
-}
-
-function openAddDayModal() { openModal('modalAddDay'); }
-
-async function saveDay() {
-  const title = document.getElementById('fDayTitle').value.trim();
-  if (!title) { toast('Please enter a day title', 'error'); return; }
-  const obj = {
-    trip_id: currentTripId,
-    day_number: parseInt(document.getElementById('fDayNum').value) || 1,
-    date: document.getElementById('fDayDate').value,
-    title, notes: document.getElementById('fDayNotes').value
-  };
-  await dbInsert('days', obj);
-  closeModal('modalAddDay');
-  toast('Day added!');
-  ['fDayTitle','fDayNotes','fDayDate'].forEach(id => document.getElementById(id).value = '');
-  loadDays();
+  const openTrace = perfBegin('saveTrip.openTripAfterCreate', { tripId: row.id });
+  await openTrip(row.id, { preferCache: true, backgroundRefresh: true, disableLegacyActivityFallback: true });
+  perfEnd(openTrace, { tripId: row.id });
+  perfEnd(trace, { status: 'created', addedDays: added, tripId: row.id });
 }
 
 function setActivityFxNote(message, isError = false) {
@@ -3569,7 +3658,7 @@ function openAddActivityModal(dayId) {
 }
 
 async function openEditActivityModal(id) {
-  const activity = await dbGetById('activities', id);
+  const activity = await dbGetById('activities', id, { preferCache: true });
   if (!activity) return;
   const targetCurrency = currentTripData?.currency || currency || 'MYR';
   populateActivityCurrencySelects(targetCurrency);
@@ -3654,40 +3743,6 @@ async function saveActivity() {
   loadDays();
 }
 
-function openAddAccomModal() { openModal('modalAddAccom'); }
-async function saveAccom() {
-  const name = document.getElementById('fAccomName').value.trim();
-  if (!name) { toast('Please enter a property name', 'error'); return; }
-  await dbInsert('accommodations', { trip_id: currentTripId, name, address: document.getElementById('fAccomAddr').value, check_in: document.getElementById('fAccomIn').value, check_out: document.getElementById('fAccomOut').value, confirmation: document.getElementById('fAccomConf').value, cost: document.getElementById('fAccomCost').value||0, notes: document.getElementById('fAccomNotes').value });
-  closeModal('modalAddAccom'); toast('Accommodation saved!'); loadAccom();
-}
-
-function openAddTransportModal() { openModal('modalAddTransport'); }
-async function saveTransport() {
-  await dbInsert('transports', { trip_id: currentTripId, type: document.getElementById('fTransType').value, from_location: document.getElementById('fTransFrom').value, to_location: document.getElementById('fTransTo').value, departure: document.getElementById('fTransDep').value, arrival: document.getElementById('fTransArr').value, operator: document.getElementById('fTransOp').value, confirmation: document.getElementById('fTransConf').value, cost: document.getElementById('fTransCost').value||0, notes: document.getElementById('fTransNotes').value });
-  closeModal('modalAddTransport'); toast('Transport saved!'); loadTransport();
-}
-
-function setExpenseFxNote(message, isError = false) {
-  const note = document.getElementById('expenseFxNote');
-  if (!note) return;
-  note.textContent = message;
-  note.style.color = isError ? 'var(--terracotta)' : 'var(--mist)';
-}
-
-function populateExpenseCurrencySelects(targetCurrency) {
-  const fromSelect = document.getElementById('fExpFromCur');
-  const toSelect = document.getElementById('fExpToCur');
-  if (!fromSelect || !toSelect) return;
-  const options = FX_CURRENCIES.map(c => `<option value="${c}">${c}</option>`).join('');
-  fromSelect.innerHTML = options;
-  toSelect.innerHTML = options;
-
-  const fallback = FX_CURRENCIES.includes(targetCurrency) ? targetCurrency : 'MYR';
-  fromSelect.value = fallback;
-  toSelect.value = fallback;
-}
-
 async function fetchConvertedAmount(amount, fromCurrency, toCurrency) {
   if (!Number.isFinite(amount) || amount <= 0) throw new Error('Amount must be greater than 0');
   if (!fromCurrency || !toCurrency) throw new Error('Please choose both currencies');
@@ -3712,88 +3767,6 @@ async function fetchConvertedAmount(amount, fromCurrency, toCurrency) {
     if (!isOnline()) throw new Error('Offline: this currency pair has no cached rate yet');
     throw error;
   }
-}
-
-async function convertExpenseAmount() {
-  const fromCurrency = document.getElementById('fExpFromCur').value;
-  const toCurrency = document.getElementById('fExpToCur').value;
-  const sourceAmount = Number(document.getElementById('fExpFromAmt').value);
-  if (!sourceAmount || sourceAmount <= 0) {
-    setExpenseFxNote('Enter source amount first.', true);
-    toast('Enter source amount first', 'error');
-    return;
-  }
-
-  try {
-    const result = await fetchConvertedAmount(sourceAmount, fromCurrency, toCurrency);
-    document.getElementById('fExpAmt').value = result.converted.toFixed(2);
-    setExpenseFxNote(formatFxNote(fromCurrency, toCurrency, result));
-  } catch (error) {
-    setExpenseFxNote(error.message, true);
-    toast(error.message, 'error');
-  }
-}
-
-function openAddExpenseModal() {
-  const targetCurrency = currentTripData?.currency || currency || 'MYR';
-  populateExpenseCurrencySelects(targetCurrency);
-  document.getElementById('fExpItem').value = '';
-  document.getElementById('fExpDate').value = new Date().toISOString().slice(0, 10);
-  document.getElementById('fExpFromAmt').value = '';
-  document.getElementById('fExpAmt').value = '';
-  document.getElementById('fExpNotes').value = '';
-  setExpenseFxNote(`Convert any currency into ${targetCurrency} before saving.`);
-  openModal('modalAddExpense');
-}
-
-async function saveExpense() {
-  const item = document.getElementById('fExpItem').value.trim();
-  if (!item) { toast('Please enter an item name', 'error'); return; }
-  const fromCurrency = document.getElementById('fExpFromCur').value;
-  const toCurrency = document.getElementById('fExpToCur').value;
-  const sourceAmount = Number(document.getElementById('fExpFromAmt').value || 0);
-  let amount = Number(document.getElementById('fExpAmt').value || 0);
-
-  if (!amount && sourceAmount > 0) {
-    try {
-      const result = await fetchConvertedAmount(sourceAmount, fromCurrency, toCurrency);
-      amount = Number(result.converted.toFixed(2));
-      document.getElementById('fExpAmt').value = amount;
-      setExpenseFxNote(formatFxNote(fromCurrency, toCurrency, result));
-    } catch (error) {
-      setExpenseFxNote(error.message, true);
-      toast(error.message, 'error');
-      return;
-    }
-  }
-
-  if (!amount || amount <= 0) {
-    toast('Please enter or convert an amount first', 'error');
-    return;
-  }
-
-  await dbInsert('expenses', {
-    trip_id: currentTripId,
-    item,
-    category: document.getElementById('fExpCat').value,
-    date: document.getElementById('fExpDate').value,
-    amount,
-    notes: document.getElementById('fExpNotes').value
-  });
-  closeModal('modalAddExpense'); toast('Expense recorded!');
-  ['fExpItem','fExpDate','fExpFromAmt','fExpAmt','fExpNotes'].forEach(id => document.getElementById(id).value='');
-  setExpenseFxNote('');
-  loadBudget();
-}
-
-function openAddPackingModal() { openModal('modalAddPacking'); }
-async function savePacking() {
-  const item = document.getElementById('fPackItem').value.trim();
-  if (!item) { toast('Item name required', 'error'); return; }
-  await dbInsert('packing', { trip_id: currentTripId, item, category: document.getElementById('fPackCat').value, packed: false });
-  closeModal('modalAddPacking'); toast('Item added!');
-  document.getElementById('fPackItem').value = '';
-  loadPacking();
 }
 
 // ─── Utilities ────────────────────────────────────────────────────────────
