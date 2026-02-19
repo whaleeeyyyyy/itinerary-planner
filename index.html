@@ -26,6 +26,12 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
+    html, body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+    }
+
     body {
       font-family: 'Crimson Pro', Georgia, serif;
       background: var(--cream);
@@ -34,6 +40,7 @@
       font-size: 17px;
       line-height: 1.6;
       overflow-x: hidden;
+      -webkit-text-size-adjust: 100%;
     }
 
     /* ─── Layout ─── */
@@ -803,6 +810,7 @@
       margin-bottom: 10px;
     }
     @media (max-width: 980px) {
+      body { font-size: 16px; }
       .main { margin-left: 0; }
       .sidebar {
         transform: translateX(-100%);
@@ -833,19 +841,24 @@
         gap: 8px;
       }
       .sync-badge { max-width: 42vw; }
-      .content { padding: 22px 16px; }
+      .content { padding: 18px 12px; }
       .hero-banner {
-        padding: 28px 22px;
-        margin-bottom: 24px;
+        padding: 22px 16px;
+        margin-bottom: 16px;
       }
-      .hero-banner h1 { font-size: 28px; }
+      .hero-banner::before,
+      .hero-banner::after {
+        display: none;
+      }
+      .hero-banner h1 { font-size: 24px; }
+      .hero-banner p { font-size: 14px; }
       .trips-grid { grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
       .trip-header {
-        padding: 22px 18px;
-        gap: 14px;
+        padding: 16px 14px;
+        gap: 10px;
         flex-direction: column;
       }
-      .trip-header-title { font-size: 24px; }
+      .trip-header-title { font-size: 22px; }
       .trip-header-actions { justify-content: flex-start; }
       .budget-overview { grid-template-columns: 1fr; gap: 14px; }
       .checklist-grid { grid-template-columns: 1fr; gap: 14px; }
@@ -856,34 +869,40 @@
       }
     }
     @media (max-width: 760px) {
+      body { font-size: 15px; }
       .activity-fx-line { grid-template-columns: 1fr; }
       .topbar {
-        height: 56px;
-        min-height: 56px;
-        padding: 8px 10px;
-        gap: 8px;
+        height: 52px;
+        min-height: 52px;
+        padding: 6px 8px;
+        gap: 6px;
       }
-      .topbar-title { font-size: 16px; }
+      .topbar-left { gap: 8px; }
+      .topbar-right { gap: 6px; }
+      .topbar-title { font-size: 15px; }
       .topbar-actions .btn {
-        padding: 6px 10px;
-        font-size: 12px;
+        padding: 6px 8px;
+        font-size: 11px;
       }
-      .content { padding: 14px 10px 18px; }
+      .content { padding: 10px 8px 14px; }
       .hero-banner {
         border-radius: 12px;
-        padding: 18px 14px;
+        padding: 14px 12px;
       }
       .hero-banner h1 {
-        font-size: 22px;
+        font-size: 20px;
         margin-bottom: 0;
       }
+      .hero-banner p { display: none; }
       .trips-grid { grid-template-columns: 1fr; }
       .trip-header {
         border-radius: 12px;
-        padding: 16px 14px;
-        margin-bottom: 16px;
+        padding: 14px 12px;
+        margin-bottom: 12px;
       }
-      .trip-header-title { font-size: 22px; }
+      .trip-header-title { font-size: 20px; }
+      .trip-header-meta { font-size: 13px; }
+      .trip-header-eyebrow { font-size: 11px; }
       .trip-header-actions {
         width: 100%;
         display: grid;
@@ -895,18 +914,21 @@
       .trip-header-actions .btn {
         width: auto;
         justify-content: center;
-        padding: 9px 12px;
+        padding: 8px 10px;
       }
       .itinerary-filter-bar {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        display: flex;
         gap: 8px;
-        overflow: visible;
-        white-space: normal;
+        overflow-x: auto;
+        white-space: nowrap;
         padding: 6px;
+        scrollbar-width: none;
       }
+      .itinerary-filter-bar::-webkit-scrollbar { display: none; }
       .itinerary-filter-btn {
-        width: 100%;
+        flex: 0 0 auto;
+        width: auto;
+        min-width: 110px;
         padding: 8px 10px;
         font-size: 13px;
         overflow: hidden;
@@ -974,11 +996,11 @@
       .modal {
         width: 100%;
         max-width: 100%;
-        max-height: 92vh;
+        max-height: 95vh;
         border-radius: 16px 16px 0 0;
       }
       .modal-head { padding: 14px 14px 10px; }
-      .modal-head h2 { font-size: 22px; }
+      .modal-head h2 { font-size: 20px; }
       .modal-body { padding: 14px; }
       .modal-footer {
         padding: 10px 14px 14px;
@@ -989,27 +1011,201 @@
         justify-content: center;
       }
       #modalAddActivity .modal { width: 100%; }
-      #modalAddActivity .modal-head h2 { font-size: 28px; }
-      #modalAddActivity .modal-close { font-size: 28px; }
+      #modalAddActivity .modal-head h2 { font-size: 24px; }
+      #modalAddActivity .modal-close { font-size: 24px; }
       #modalAddActivity .form-group input,
       #modalAddActivity .form-group select,
       #modalAddActivity .form-group textarea {
-        font-size: 17px;
-        padding: 12px 14px;
+        font-size: 16px;
+        padding: 11px 12px;
       }
       #modalAddActivity .modal-footer .btn {
-        font-size: 18px;
+        font-size: 16px;
         min-width: 0;
       }
+      #modalAddActivity .form-group label { font-size: 15px; }
+      .activity-fx summary { font-size: 16px; }
     }
     @media (max-width: 560px) {
       .sync-badge { display: none; }
-      .topbar-actions .btn { padding: 6px 8px; font-size: 12px; }
+      .topbar-actions .btn { padding: 6px 8px; font-size: 11px; }
+      .topbar-title { font-size: 14px; }
+      .content { padding: 8px 6px 12px; }
       .empty-state { padding: 36px 12px; }
-      .table-scroll .expense-table { min-width: 560px; }
-      .itinerary-filter-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .trip-header-title { font-size: 20px; }
-      .trip-header-meta { font-size: 13px; }
+      .trip-header {
+        padding: 12px 10px;
+        border-radius: 10px;
+      }
+      .trip-header-title { font-size: 19px; }
+      .trip-header-meta { font-size: 12px; }
+      .trip-header-actions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 6px;
+      }
+      .trip-header-actions .btn:first-child { grid-column: 1 / -1; }
+      .trip-header-actions .btn {
+        padding: 7px 8px;
+        font-size: 12px;
+      }
+      #modalAddActivity .modal {
+        max-height: 96vh;
+        border-radius: 14px 14px 0 0;
+      }
+      #modalAddActivity .modal-head {
+        padding: 10px 12px 8px;
+      }
+      #modalAddActivity .modal-head h2 {
+        font-size: 20px;
+      }
+      #modalAddActivity .modal-close {
+        font-size: 20px;
+      }
+      #modalAddActivity .modal-body {
+        padding: 10px 12px;
+      }
+      #modalAddActivity .modal-footer {
+        padding: 8px 12px 12px;
+        gap: 8px;
+        position: sticky;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(253,250,245,0.9) 0%, rgba(253,250,245,1) 24%);
+        border-top: 1px solid var(--parchment);
+      }
+      #modalAddActivity .form-group {
+        margin-bottom: 12px;
+      }
+      #modalAddActivity .form-group label {
+        font-size: 13px;
+        margin-bottom: 5px;
+      }
+      #modalAddActivity .form-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      #modalAddActivity .form-group input,
+      #modalAddActivity .form-group select,
+      #modalAddActivity .form-group textarea {
+        font-size: 14px;
+        padding: 9px 10px;
+        border-radius: 8px;
+      }
+      #modalAddActivity .form-group textarea {
+        min-height: 82px;
+      }
+      #modalAddActivity .activity-cost-hint {
+        font-size: 12px;
+        margin-top: -6px;
+        margin-bottom: 6px;
+      }
+      #modalAddActivity .activity-fx {
+        padding: 8px 9px 4px;
+        margin-top: 4px;
+      }
+      #modalAddActivity .activity-fx summary {
+        font-size: 14px;
+        margin-bottom: 6px;
+      }
+      #modalAddActivity .activity-fx-line {
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+      #modalAddActivity #activityFxButton {
+        margin-bottom: 6px;
+        font-size: 13px;
+        padding: 8px 10px;
+      }
+      #modalAddActivity #activityFxNote {
+        font-size: 12px;
+        margin: 4px 0 2px;
+      }
+      #modalAddActivity .modal-footer .btn {
+        font-size: 14px;
+        min-height: 44px;
+        padding: 10px 12px;
+        border-radius: 10px;
+      }
+      #modalAddActivity .modal-footer .btn.btn-primary {
+        min-height: 46px;
+        font-size: 15px;
+        font-weight: 600;
+      }
+      .itinerary-filter-bar {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 6px;
+        overflow: visible;
+        white-space: normal;
+        padding: 4px;
+      }
+      .itinerary-filter-btn {
+        min-width: 0;
+        width: 100%;
+        padding: 7px 6px;
+        font-size: 11.5px;
+      }
+      .day-card { margin-bottom: 10px; }
+      .day-card-head { padding: 10px 10px; }
+      .day-card-head .day-label {
+        font-size: 10px;
+        letter-spacing: 0.12em;
+      }
+      .day-card-head .day-title { font-size: 13px; }
+      .day-head-actions .btn {
+        font-size: 11px;
+        padding: 5px 8px;
+      }
+      .day-head-actions .btn-icon {
+        width: 30px;
+        height: 30px;
+      }
+      .table-scroll {
+        overflow-x: visible;
+        border-radius: 0;
+      }
+      .expense-table {
+        border: none;
+        background: transparent;
+      }
+      .expense-table thead { display: none; }
+      .expense-table tbody,
+      .expense-table tr,
+      .expense-table td {
+        display: block;
+        width: 100%;
+      }
+      .expense-table tr {
+        background: var(--white);
+        border: 1px solid var(--parchment);
+        border-radius: 10px;
+        margin-bottom: 10px;
+        padding: 8px 10px;
+      }
+      .expense-table td {
+        border: none;
+        padding: 6px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+      .expense-table td::before {
+        content: attr(data-label);
+        color: var(--mist);
+        font-family: 'DM Mono', monospace;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .expense-table td:last-child {
+        justify-content: flex-end;
+        padding-top: 8px;
+      }
+      .expense-table td:last-child::before { content: none; }
+      .expense-table td[colspan] {
+        display: block;
+        text-align: center !important;
+      }
+      .expense-table td[colspan]::before { content: none; }
     }
     @media (max-width: 760px) {
       .auth-card { padding: 18px 14px; }
@@ -2789,11 +2985,11 @@ async function loadBudget() {
   if (!expenses.length) { tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;padding:32px;color:var(--mist);font-style:italic;">No expenses recorded yet</td></tr>`; return; }
   tbody.innerHTML = expenses.map(e => `
     <tr>
-      <td>${safeText(e.item || '')}</td>
-      <td>${safeText(e.category || '')}</td>
-      <td>${formatDate(e.date)}</td>
-      <td style="color:var(--terracotta);font-family:'DM Mono',monospace;">${safeText(cur)} ${Number(e.amount||0).toLocaleString()}</td>
-      <td><button class="btn btn-danger btn-sm" onclick="deleteExpense('${safeJsArg(e.id)}')">✕</button></td>
+      <td data-label="Item">${safeText(e.item || '')}</td>
+      <td data-label="Category">${safeText(e.category || '')}</td>
+      <td data-label="Date">${formatDate(e.date)}</td>
+      <td data-label="Amount" style="color:var(--terracotta);font-family:'DM Mono',monospace;">${safeText(cur)} ${Number(e.amount||0).toLocaleString()}</td>
+      <td data-label="Action"><button class="btn btn-danger btn-sm" onclick="deleteExpense('${safeJsArg(e.id)}')">✕</button></td>
     </tr>`).join('');
 }
 async function deleteExpense(id) { await dbDelete('expenses',id); loadBudget(); }
