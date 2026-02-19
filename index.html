@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Voyageur — Travel Itinerary Planner</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='52' font-size='52'%3E%E2%9C%88%EF%B8%8F%3C/text%3E%3C/svg%3E" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
@@ -2161,6 +2162,9 @@ const DEFAULT_SUPABASE_URL = window.__VOYAGEUR_SUPABASE_URL || 'https://usnqzrkw
 const DEFAULT_SUPABASE_ANON_KEY = window.__VOYAGEUR_SUPABASE_ANON_KEY || 'sb_publishable_h6fEKv_SWz5Z_laFKOVsEw_CxfJZRsu';
 const ENABLE_USER_SCOPE = window.__VOYAGEUR_ENABLE_USER_SCOPE === true;
 const ACCESS_MODE = String(window.__VOYAGEUR_ACCESS_MODE || 'shared').toLowerCase() === 'private' ? 'private' : 'shared';
+const SHARED_USER_ID = String(
+  window.__VOYAGEUR_SHARED_USER_ID || '7b4f26a2-b4aa-42ec-8850-1355b5d37824'
+).trim() || null;
 const FX_API_BASE = 'https://api.frankfurter.dev/v1';
 const FX_CURRENCIES = ['AED','AUD','BGN','BRL','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HUF','IDR','ILS','INR','ISK','JPY','KRW','MXN','MYR','NOK','NZD','PHP','PLN','RON','SEK','SGD','THB','TRY','USD','ZAR'];
 const FX_RATE_CACHE_PREFIX = 'voyageur_fx_rate_v1';
@@ -2255,13 +2259,23 @@ function hasUserScope(table) {
   return ACCESS_MODE === 'private' && !!currentUser && tableScopeSupport[table] === true;
 }
 
+function getWriteUserId() {
+  if (currentUser?.id) return currentUser.id;
+  if (!ENABLE_USER_SCOPE && SHARED_USER_ID) return SHARED_USER_ID;
+  return null;
+}
+
 function shouldAttachUserId(table) {
-  return !!currentUser && tableScopeSupport[table] === true;
+  if (currentUser?.id) return tableScopeSupport[table] === true;
+  if (!ENABLE_USER_SCOPE && SHARED_USER_ID) return true;
+  return false;
 }
 
 function withUserScopePayload(table, payload, includeUserId = false) {
   if (!includeUserId || !shouldAttachUserId(table)) return { ...payload };
-  return { ...payload, user_id: currentUser.id };
+  const userId = getWriteUserId();
+  if (!userId) return { ...payload };
+  return { ...payload, user_id: userId };
 }
 
 function applyUserScopeToQuery(query, table) {
@@ -2331,7 +2345,7 @@ async function detectUserScopeCapability() {
   scopeDetectedForUserId = scopeKey;
 
   if (!ENABLE_USER_SCOPE) {
-    console.info('User scope disabled: running shared mode without per-user auth filters.');
+    // Shared mode intentionally skips auth-based row filters.
   } else if (!currentUser) {
     console.warn('Anonymous auth is disabled in Supabase. Enable it to use app without login UI.');
   } else if (ACCESS_MODE === 'shared') {
@@ -2642,7 +2656,8 @@ function enqueueSyncOperation(op) {
 }
 
 async function syncPendingOperations() {
-  if (!sbClient || !currentUser || !isOnline() || syncInProgress || !syncQueue.length) {
+  const hasWriteIdentity = !!currentUser || (!ENABLE_USER_SCOPE && !!SHARED_USER_ID);
+  if (!sbClient || !hasWriteIdentity || !isOnline() || syncInProgress || !syncQueue.length) {
     updateSyncStatusBadge();
     return;
   }
@@ -2760,6 +2775,12 @@ async function dbInsert(table, obj) {
       return localRow;
     }
     removeCachedRow(table, localRow.id);
+    const msg = String(error?.message || '');
+    if (!ENABLE_USER_SCOPE && !SHARED_USER_ID && /user_id|null value/i.test(msg)) {
+      toast('DB requires user_id. Set window.__VOYAGEUR_SHARED_USER_ID to an auth.users UUID.', 'error');
+      console.error('Insert blocked: missing shared user id for user_id-protected schema.', error);
+      return null;
+    }
     toast('DB error: ' + error.message, 'error');
     return null;
   }
