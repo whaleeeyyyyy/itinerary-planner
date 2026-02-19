@@ -51,171 +51,23 @@
 
     /* ─── Layout ─── */
     .app { display: flex; min-height: 100vh; }
-    .app, .main, .content, .panel, .tab-panel, #daysContainer { min-width: 0; }
-    .app.sidebar-collapsed .sidebar {
-      width: 0;
-      transform: translateX(-100%);
-      opacity: 0;
-      pointer-events: none;
-    }
-    .app.sidebar-collapsed .main { margin-left: 0; }
-
-    /* ─── Sidebar ─── */
-    .sidebar {
-      width: 260px;
-      min-height: 100vh;
-      background: var(--forest);
-      display: flex;
-      flex-direction: column;
-      position: fixed;
-      left: 0; top: 0; bottom: 0;
-      z-index: 100;
-      overflow-y: auto;
-      overflow-x: hidden;
-      transition: width 0.22s ease, transform 0.22s ease, opacity 0.18s ease;
-    }
-    .sidebar-backdrop {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(26,58,42,0.25);
-      z-index: 90;
-    }
-
-    .sidebar-logo {
-      padding: 32px 24px 20px;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    .sidebar-logo .wordmark {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--gold);
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-    }
-    .sidebar-logo .tagline {
-      font-size: 11px;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      margin-top: 2px;
-      font-family: 'DM Sans', sans-serif;
-    }
-
-    .sidebar-section {
-      padding: 20px 16px 8px;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.28);
-      font-family: 'DM Sans', sans-serif;
-    }
-
-    .sidebar-nav { padding: 0 12px; flex: 1; }
-    .nav-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      color: rgba(255,255,255,0.62);
-      font-size: 15px;
-      transition: all 0.2s;
-      margin-bottom: 2px;
-    }
-    .nav-item:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.9); }
-    .nav-item.active { background: var(--terracotta); color: #fff; }
-    .nav-item .icon { font-size: 16px; width: 20px; text-align: center; }
-
-    .sidebar-trips { padding: 0 12px; margin-top: 8px; }
-    .trip-chip {
-      padding: 9px 12px;
-      border-radius: 8px;
-      cursor: pointer;
-      color: rgba(255,255,255,0.55);
-      font-size: 13.5px;
-      transition: all 0.2s;
-      margin-bottom: 2px;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .trip-chip:hover { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.85); }
-    .trip-chip.active { background: rgba(201,168,76,0.2); color: var(--gold); }
-    .trip-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); opacity: 0.5; flex-shrink: 0; }
-    .trip-chip.active .dot { opacity: 1; }
-
-    .btn-new-trip {
-      margin: 12px;
-      padding: 10px 16px;
-      background: rgba(255,255,255,0.07);
-      border: 1px dashed rgba(255,255,255,0.2);
-      border-radius: 8px;
-      color: rgba(255,255,255,0.5);
-      font-size: 13px;
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-      font-family: 'DM Sans', sans-serif;
-      letter-spacing: 0.04em;
-    }
-    .btn-new-trip:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,168,76,0.07); }
+    .app, .main, .content, .panel, #daysContainer { min-width: 0; }
 
     /* ─── Main ─── */
     .main {
-      margin-left: 260px;
+      margin-left: 0;
       flex: 1;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       transition: margin-left 0.22s ease;
     }
-
-    .topbar {
-      background: var(--white);
-      border-bottom: 1px solid var(--parchment);
-      padding: 0 40px;
-      height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      position: sticky;
-      top: 0;
-      z-index: 50;
+    .page-trip-header {
+      display: none;
+      padding: 16px 16px 0;
     }
-
-    .topbar-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 18px;
-      color: var(--ink);
-      font-weight: 600;
-      min-width: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      overflow-wrap: anywhere;
-    }
-
-    .topbar-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
-    .sidebar-toggle {
-      width: 44px;
-      height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 8px;
-      border: 1px solid #d8cfbe;
-      background: transparent;
-      color: var(--ink-mid);
-      cursor: pointer;
-      font-size: 18px;
-      line-height: 1;
-      transition: all 0.18s;
-      flex-shrink: 0;
-    }
-    .sidebar-toggle:hover { background: var(--parchment); }
-
-    .topbar-right { display: flex; gap: 10px; align-items: center; min-width: 0; }
-    .topbar-actions { display: flex; gap: 10px; align-items: center; }
+    .page-trip-header.active { display: block; }
+    .page-trip-header .trip-header { margin-bottom: 0; }
 
     .btn {
       display: inline-flex; align-items: center; gap: 6px;
@@ -248,54 +100,6 @@
     .panel { display: none; }
     .panel.active { display: block; }
 
-    /* ─── Dashboard ─── */
-    .hero-banner {
-      background: var(--forest);
-      border-radius: 16px;
-      padding: 40px 48px;
-      color: var(--cream);
-      margin-bottom: 36px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-banner::before {
-      content: '';
-      position: absolute;
-      right: -40px; top: -40px;
-      width: 300px; height: 300px;
-      background: radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%);
-    }
-    .hero-banner::after {
-      content: '';
-      position: absolute;
-      left: 40%; bottom: -60px;
-      width: 200px; height: 200px;
-      background: radial-gradient(circle, rgba(192,97,58,0.15) 0%, transparent 70%);
-    }
-    .hero-banner h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 32px;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .hero-banner h1 em { color: var(--gold); font-style: italic; }
-    .hero-banner p { color: rgba(245,240,235,0.76); font-size: 16px; max-width: 480px; }
-
-    .stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 36px; }
-    .stat-card {
-      background: var(--white);
-      border-radius: 10px;
-      padding: 20px 22px;
-      border: 1px solid var(--parchment);
-    }
-    .stat-card .num {
-      font-family: 'Playfair Display', serif;
-      font-size: 28px;
-      font-weight: 700;
-      color: var(--forest);
-    }
-    .stat-card .label { font-size: 13px; color: var(--mist); letter-spacing: 0.06em; }
-
     .section-head {
       display: flex; justify-content: space-between; align-items: baseline;
       margin-bottom: 18px;
@@ -307,61 +111,6 @@
       font-size: 20px;
       font-weight: 600;
     }
-
-    .trips-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-    .trip-card {
-      background: var(--white);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--parchment);
-      cursor: pointer;
-      transition: all 0.22s;
-      box-shadow: 0 2px 8px var(--shadow);
-    }
-    .trip-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px var(--shadow-strong); }
-    .trip-card-banner {
-      height: 60px;
-      background: linear-gradient(135deg, var(--forest) 0%, var(--forest-mid) 100%);
-      position: relative;
-      display: flex; align-items: flex-end;
-      padding: 12px 16px;
-    }
-    .trip-card-flag {
-      font-size: 28px;
-      position: absolute;
-      right: 14px; top: 14px;
-    }
-    .trip-card-dest {
-      color: var(--gold);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-    }
-    .trip-card-body { padding: 16px; }
-    .trip-card-name {
-      font-family: 'Playfair Display', serif;
-      font-size: 17px;
-      font-weight: 600;
-      margin-bottom: 4px;
-      overflow-wrap: anywhere;
-    }
-    .trip-card-dates { font-size: 13px; color: var(--mist); }
-    .trip-card-footer {
-      border-top: 1px solid var(--parchment);
-      padding: 10px 16px;
-      display: flex; gap: 8px; flex-wrap: wrap;
-    }
-    .badge {
-      padding: 2px 8px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-family: 'DM Sans', sans-serif;
-      letter-spacing: 0.04em;
-    }
-    .badge-forest { background: rgba(74,94,72,0.12); color: var(--forest); }
-    .badge-terra { background: rgba(122,148,120,0.14); color: var(--forest-mid); }
-    .badge-gold { background: rgba(212,168,83,0.16); color: #9a7631; }
 
     /* ─── Trip Detail ─── */
     .trip-header {
@@ -460,43 +209,124 @@
     .header-kebab-item.delete { color: #b2454f; }
     .header-kebab-item.delete:hover { background: #fff2f4; }
 
-    .tab-panel { display: none; }
-    .tab-panel.active { display: block; }
-
-    .itinerary-filter-bar {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 6px;
+    .itinerary-mode-bar {
       background: var(--white);
-      border-radius: 10px;
       border: 1px solid var(--parchment);
+      border-radius: 12px;
       padding: 6px;
-      margin-bottom: 20px;
+      margin-bottom: 12px;
+    }
+    .itinerary-mode-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .itinerary-mode-btn {
+      border: 1px solid var(--parchment);
+      background: var(--white);
+      color: var(--mist);
+      border-radius: 10px;
+      padding: 10px 14px;
+      min-height: 44px;
       width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.2;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .itinerary-mode-btn.active {
+      background: var(--forest);
+      color: #fff;
+      border-color: var(--forest);
+    }
+    .itinerary-mode-count {
+      background: var(--parchment);
+      color: var(--ink-mid);
+      border-radius: 999px;
+      padding: 2px 10px;
+      font-size: 14px;
+      min-width: 28px;
+      text-align: center;
+    }
+    .itinerary-mode-btn.active .itinerary-mode-count {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .itinerary-filter-shell {
+      background: var(--white);
+      border-radius: 12px;
+      border: 1px solid var(--parchment);
+      padding: 16px 12px;
+      margin-bottom: 20px;
+    }
+    .itinerary-filter-label {
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--mist);
+      margin-bottom: 12px;
+      padding: 0 4px;
+    }
+    .itinerary-filter-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      width: 100%;
+      padding: 2px 2px 4px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
     }
     .itinerary-filter-btn {
-      border: none;
-      background: transparent;
+      border: 1px solid var(--parchment);
+      background: var(--white);
       color: var(--mist);
-      border-radius: 7px;
-      padding: 8px 18px;
+      border-radius: 999px;
+      padding: 8px 14px;
       font-size: 14px;
       cursor: pointer;
       font-family: 'DM Sans', sans-serif;
       white-space: nowrap;
-      width: 100%;
-      text-align: center;
+      width: auto;
+      text-align: left;
       transition: all 0.18s;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
+      gap: 8px;
       min-height: 44px;
       line-height: 1.25;
+      flex: 0 0 auto;
     }
     .itinerary-filter-btn:hover { background: var(--parchment); color: var(--ink); }
+    .itinerary-filter-count {
+      background: var(--parchment);
+      color: var(--ink-mid);
+      border-radius: 999px;
+      min-width: 28px;
+      padding: 2px 8px;
+      font-size: 13px;
+      text-align: center;
+      line-height: 1.2;
+    }
     .itinerary-filter-btn.active {
       background: var(--forest);
       color: #fff;
+      border-color: var(--forest);
+    }
+    .itinerary-filter-btn.active .itinerary-filter-count {
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+    .trip-considerations {
+      margin-top: 26px;
+      display: none;
     }
 
     /* ─── Day cards ─── */
@@ -648,113 +478,6 @@
       border-top: 1px dashed #d8cfbe;
     }
 
-    /* ─── Budget ─── */
-    .budget-overview {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-      margin-bottom: 28px;
-    }
-    .budget-box {
-      background: var(--white);
-      border: 1px solid var(--parchment);
-      border-radius: 12px;
-      padding: 22px 24px;
-    }
-    .budget-box .b-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); font-family: 'DM Sans', sans-serif; }
-    .budget-box .b-val { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: var(--forest); }
-    .budget-box .b-val.over { color: var(--terracotta); }
-    .progress-bar { height: 6px; background: var(--parchment); border-radius: 99px; margin-top: 12px; overflow: hidden; }
-    .progress-fill { height: 100%; border-radius: 99px; background: var(--forest); transition: width 0.4s; }
-    .progress-fill.warn { background: var(--terracotta); }
-
-    .expense-table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--white);
-      border-radius: 12px;
-      overflow: hidden;
-      border: 1px solid var(--parchment);
-    }
-    .expense-table th {
-      background: var(--forest);
-      color: rgba(255,255,255,0.7);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 11px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 12px 16px;
-      text-align: left;
-      font-weight: 400;
-    }
-    .expense-table td {
-      padding: 12px 16px;
-      border-bottom: 1px solid var(--parchment);
-      font-size: 14.5px;
-    }
-    .expense-table tr:last-child td { border-bottom: none; }
-    .expense-table tr:hover td { background: rgba(245,240,232,0.5); }
-    .table-scroll {
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      border-radius: 12px;
-    }
-    .table-scroll .expense-table { min-width: 620px; }
-
-    /* ─── Checklist ─── */
-    .checklist-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .checklist-card {
-      background: var(--white);
-      border: 1px solid var(--parchment);
-      border-radius: 12px;
-      padding: 20px 22px;
-    }
-    .checklist-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 14px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--parchment);
-    }
-    .check-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 7px 0;
-      cursor: pointer;
-      border-radius: 6px;
-      transition: background 0.15s;
-      font-size: 14.5px;
-    }
-    .check-item:hover { background: rgba(245,240,232,0.5); padding: 7px 6px; margin: 0 -6px; }
-    .check-item input[type="checkbox"] {
-      accent-color: var(--forest);
-      width: 15px; height: 15px;
-      cursor: pointer;
-    }
-    .check-item.checked { text-decoration: line-through; color: var(--mist); }
-
-    /* ─── Accom & Transport ─── */
-    .info-card {
-      background: var(--white);
-      border: 1px solid var(--parchment);
-      border-radius: 12px;
-      padding: 20px 22px;
-      margin-bottom: 16px;
-      display: flex; justify-content: space-between; align-items: flex-start;
-    }
-    .info-card-left h3 { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-    .info-card-left p { font-size: 13.5px; color: var(--ink-mid); }
-    .info-card-meta { margin-top: 10px; display: flex; gap: 10px; flex-wrap: wrap; }
-    .meta-pill {
-      background: rgba(74,94,72,0.12);
-      padding: 3px 10px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-family: 'DM Sans', sans-serif;
-      color: var(--forest);
-    }
-
     /* ─── Considerations ─── */
     .considerations-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
     .consider-card {
@@ -816,27 +539,6 @@
       line-height: 1.4;
     }
 
-    .settings-wrap {
-      width: 100%;
-      max-width: 520px;
-    }
-    .settings-card {
-      background: var(--white);
-      border: 1px solid var(--parchment);
-      border-radius: 12px;
-      padding: 20px 16px;
-    }
-    .settings-card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 22px;
-      margin-bottom: 6px;
-    }
-    .settings-card-note {
-      font-size: 14px;
-      color: var(--mist);
-      margin-bottom: 16px;
-      line-height: 1.4;
-    }
     .btn-nowrap { white-space: nowrap; }
 
     /* ─── Forms ─── */
@@ -882,12 +584,6 @@
       gap: 8px;
       align-items: center;
     }
-    .panel-actions-right {
-      display: flex;
-      justify-content: flex-end;
-      margin-bottom: 16px;
-    }
-
     /* ─── Activity Modal Usability ─── */
     #modalAddActivity .modal { width: 720px; }
     #modalAddActivity .modal-head h2 { font-size: 36px; }
@@ -946,39 +642,6 @@
       line-height: 1.5;
     }
     .main { margin-left: 0; }
-    .sidebar {
-      transform: translateX(-100%);
-      box-shadow: 0 12px 28px rgba(0,0,0,0.18);
-    }
-    .app:not(.sidebar-collapsed) .sidebar {
-      width: 260px;
-      transform: translateX(0);
-      opacity: 1;
-      pointer-events: auto;
-    }
-    .app:not(.sidebar-collapsed) .sidebar-backdrop { display: block; }
-    .sidebar-section {
-      font-size: 14px;
-      letter-spacing: 0.08em;
-    }
-    .sidebar-logo .tagline { font-size: 14px; letter-spacing: 0.08em; }
-    .nav-item {
-      font-size: 16px;
-      min-height: 44px;
-      padding: 10px 12px;
-      margin-bottom: 8px;
-    }
-    .trip-chip {
-      font-size: 16px;
-      min-height: 44px;
-      display: flex;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .btn-new-trip {
-      min-height: 44px;
-      font-size: 14px;
-    }
     .content { padding: 16px; }
     .section-head {
       margin-bottom: 16px;
@@ -991,40 +654,15 @@
       justify-content: center;
     }
     .section-head h2 { font-size: 22px; }
-    .hero-banner {
-      border-radius: 12px;
-      padding: 20px 16px;
-      margin-bottom: 24px;
-    }
-    .hero-banner::before,
-    .hero-banner::after { display: none; }
-    .hero-banner h1 { font-size: 30px; line-height: 1.2; margin-bottom: 4px; }
-    .hero-banner p { font-size: 14px; }
-    .trip-card-dest,
-    .badge,
     .trip-header-eyebrow,
     .day-card-head .day-label,
     .activity-time,
     .activity-location,
     .activity-cost,
-    .activity-desc,
-    .budget-box .b-label,
-    .info-card-left p,
-    .meta-pill,
-    .expense-table td::before {
+    .activity-desc {
       font-size: 14px;
       line-height: 1.4;
     }
-
-    .topbar {
-      height: 60px;
-      min-height: 60px;
-      padding: 0 12px;
-      gap: 8px;
-    }
-    .topbar-left { gap: 8px; min-width: 0; flex: 1; }
-    .topbar-right { gap: 8px; min-width: 0; }
-    .topbar-title { font-size: 20px; }
 
     /* Touch targets */
     .btn {
@@ -1045,15 +683,6 @@
       padding: 0;
       font-size: 18px;
     }
-    .topbar-actions { gap: 8px; }
-    .topbar-actions .btn { padding: 8px 10px; font-size: 14px; min-height: 44px; }
-
-    .trips-grid { grid-template-columns: 1fr; gap: 14px; }
-    .trip-card:hover { transform: none; box-shadow: 0 2px 8px var(--shadow); }
-    .trip-card-banner { height: 54px; }
-    .trip-card-name { font-size: 22px; }
-    .trip-card-dates { font-size: 14px; }
-
     .trip-header {
       border-radius: 12px;
       padding: 16px;
@@ -1142,19 +771,6 @@
       gap: 8px;
     }
 
-    .budget-overview { grid-template-columns: 1fr; gap: 12px; margin-bottom: 16px; }
-    .budget-box { padding: 16px; }
-    .budget-box .b-val { font-size: 28px; line-height: 1.2; }
-
-    .panel-actions-right { margin-bottom: 12px; }
-    .panel-actions-right .btn { width: 100%; justify-content: center; }
-    .info-card {
-      padding: 14px;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .info-card > .btn { width: 100%; }
-    .checklist-grid { grid-template-columns: 1fr; gap: 14px; }
     .considerations-grid { grid-template-columns: 1fr; gap: 14px; }
     .consider-card ul li { font-size: 14px; line-height: 1.45; }
 
@@ -1243,84 +859,26 @@
       border-radius: 10px;
     }
 
-    /* Mobile budget table as stacked cards */
-    .table-scroll {
-      overflow-x: visible;
-      border-radius: 0;
-    }
-    .expense-table {
-      border: none;
-      background: transparent;
-    }
-    .expense-table thead { display: none; }
-    .expense-table tbody,
-    .expense-table tr,
-    .expense-table td {
-      display: block;
-      width: 100%;
-    }
-    .expense-table tr {
-      background: var(--white);
-      border: 1px solid var(--parchment);
-      border-radius: 10px;
-      margin-bottom: 10px;
-      padding: 10px 12px;
-    }
-    .expense-table td {
-      border: none;
-      padding: 7px 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      font-size: 14px;
-    }
-    .expense-table td::before {
-      content: attr(data-label);
-      color: var(--mist);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 14px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-    .expense-table td:last-child {
-      justify-content: flex-end;
-      padding-top: 8px;
-    }
-    .expense-table td:last-child::before { content: none; }
-    .expense-table td[colspan] {
-      display: block;
-      text-align: center !important;
-    }
-    .expense-table td[colspan]::before { content: none; }
-
     /* Large mobile (390-430px): loosen spacing and allow 2-column actions */
     @media (min-width: 390px) {
+      .page-trip-header { padding: 18px 18px 0; }
       .content { padding: 18px; }
-      .itinerary-filter-bar { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     }
 
     /* Tablet (>=768px): 2-column layouts and desktop-like tables */
     @media (min-width: 768px) {
-      .topbar { padding: 0 18px; }
-      .topbar-title { font-size: 24px; }
+      .page-trip-header { padding: 24px 24px 0; }
       .content { padding: 24px; }
       .section-head {
         flex-direction: row;
         align-items: baseline;
       }
       .section-head .btn { width: auto; }
-      .hero-banner { padding: 24px 22px; }
-      .hero-banner h1 { font-size: 34px; }
-      .trips-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
       .trip-header {
         padding: 20px;
         flex-direction: column;
       }
-      .budget-overview { grid-template-columns: 1fr 1fr; gap: 16px; }
-      .checklist-grid { grid-template-columns: 1fr 1fr; }
       .considerations-grid { grid-template-columns: repeat(2, 1fr); }
-      .panel-actions-right .btn { width: auto; }
       .form-row { grid-template-columns: 1fr 1fr; gap: 12px; }
       .trip-destination-row {
         flex-direction: row;
@@ -1361,84 +919,15 @@
       #modalAddActivity .modal { width: 700px; }
       #modalAddActivity .form-row { grid-template-columns: 1fr 1fr; gap: 10px; }
       #modalAddActivity .activity-fx-line { grid-template-columns: 1fr 220px; }
-      .settings-card {
-        padding: 28px;
-      }
-      .settings-card-title { font-size: 24px; }
-      .table-scroll {
-        overflow-x: auto;
-        border-radius: 12px;
-      }
-      .table-scroll .expense-table { min-width: 0; }
-      .expense-table {
-        border: 1px solid var(--parchment);
-        background: var(--white);
-      }
-      .expense-table thead { display: table-header-group; }
-      .expense-table tbody { display: table-row-group; }
-      .expense-table tr { display: table-row; padding: 0; margin: 0; border: none; border-radius: 0; }
-      .expense-table td, .expense-table th {
-        display: table-cell;
-        width: auto;
-      }
-      .expense-table td {
-        font-size: 15px;
-        padding: 12px 14px;
-        border-bottom: 1px solid var(--parchment);
-      }
-      .expense-table td::before { content: none; }
-      .expense-table td:last-child { padding-top: 12px; }
     }
 
-    /* Desktop (>=1024px): persistent sidebar + denser multi-column layout */
+    /* Desktop (>=1024px): denser multi-column layout */
     @media (min-width: 1024px) {
       body { font-size: 17px; }
-      .sidebar {
-        transform: translateX(0);
-        width: 260px;
-        opacity: 1;
-        pointer-events: auto;
-        box-shadow: none;
-      }
-      .sidebar-backdrop { display: none !important; }
-      .main { margin-left: 260px; }
-      .sidebar-section {
-        font-size: 10px;
-        letter-spacing: 0.18em;
-      }
-      .sidebar-logo .tagline { font-size: 11px; letter-spacing: 0.14em; }
-      .nav-item {
-        font-size: 15px;
-        min-height: 0;
-        margin-bottom: 2px;
-      }
-      .trip-chip {
-        font-size: 13.5px;
-        min-height: 0;
-        margin-bottom: 2px;
-      }
-      .btn-new-trip { font-size: 13px; }
+      .main { margin-left: 0; }
 
-      .topbar {
-        height: 60px;
-        min-height: 60px;
-        padding: 0 40px;
-      }
-      .topbar-title { font-size: 28px; }
+      .page-trip-header { padding: 36px 40px 0; }
       .content { padding: 36px 40px; }
-      .hero-banner {
-        padding: 40px 48px;
-        margin-bottom: 36px;
-        border-radius: 16px;
-      }
-      .hero-banner::before,
-      .hero-banner::after { display: block; }
-      .hero-banner h1 { font-size: 42px; }
-
-      .trips-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-      .trip-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px var(--shadow-strong); }
-      .trip-card-dest { font-size: 11px; }
-      .badge { font-size: 11px; }
       .trip-header {
         flex-direction: row;
         align-items: flex-start;
@@ -1461,25 +950,18 @@
       .activity-desc { font-size: 13.5px; }
       .activity-location,
       .activity-cost { font-size: 12px; }
-      .budget-box .b-label { font-size: 12px; }
-      .info-card-left p { font-size: 13.5px; }
-      .meta-pill { font-size: 12px; }
       .activity-actions { grid-column: auto; }
 
       .considerations-grid { grid-template-columns: repeat(3, 1fr); }
-      .checklist-grid { grid-template-columns: 1fr 1fr; }
-      .panel-actions-right { justify-content: flex-end; }
-      .panel-actions-right .btn { min-height: 44px; }
       .modal { box-shadow: 0 24px 60px rgba(0,0,0,0.25); }
     }
 
     /* Large desktop (>=1280px): increase content breathing room */
     @media (min-width: 1280px) {
+      .page-trip-header { padding: 40px 48px 0; }
       .content { padding: 40px 48px; }
-      .hero-banner h1 { font-size: 48px; }
       .trip-header-title { font-size: 46px; }
       .section-head h2 { font-size: 30px; }
-      .budget-box .b-val { font-size: 36px; }
     }
     #modalAddActivity .activity-fx-line .form-group { margin-bottom: 0; }
     #activityFxButton {
@@ -1501,20 +983,6 @@
       color: var(--mist);
       margin: 6px 0 4px;
     }
-
-    /* ─── Supabase config ─── */
-    .config-banner {
-      background: linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(26,58,42,0.08) 100%);
-      border: 1px dashed var(--gold);
-      border-radius: 12px;
-      padding: 20px 24px;
-      margin-bottom: 28px;
-      display: flex; gap: 16px; align-items: flex-start;
-    }
-    .config-banner .cfg-icon { font-size: 24px; flex-shrink: 0; }
-    .config-banner h3 { font-family: 'Playfair Display', serif; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
-    .config-banner p { font-size: 13.5px; color: var(--ink-mid); }
-    .config-banner.hidden { display: none; }
 
     /* ─── Empty states ─── */
     .empty-state {
@@ -1571,84 +1039,39 @@
 <!-- ─── App ─── -->
 <div class="app" id="mainApp">
 
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-logo">
-      <div class="wordmark" id="sidebarWordmark" data-full="Voyageur" data-short="V">Voyageur</div>
-      <div class="tagline">Travel Planner</div>
-    </div>
-    <div class="sidebar-nav">
-      <div class="sidebar-section">Navigate</div>
-      <div class="nav-item active" onclick="showPanel('dashboard')">
-        <span class="icon">🗺️</span><span class="nav-label">Dashboard</span>
-      </div>
-      <div class="nav-item" onclick="showPanel('considerations')">
-        <span class="icon">💡</span><span class="nav-label">What to Consider</span>
-      </div>
-      <div class="nav-item" onclick="showPanel('settings')">
-        <span class="icon">⚙️</span><span class="nav-label">Settings</span>
-      </div>
-    </div>
-    <div>
-      <div class="sidebar-section" style="padding-top:24px;">My Trips</div>
-      <div class="sidebar-trips" id="sidebarTrips">
-        <div style="padding: 8px 12px; font-size:13px; color:rgba(255,255,255,0.3); font-style:italic;">Loading trips…</div>
-      </div>
-      <button class="btn-new-trip" onclick="openNewTripModal()">+ New Trip</button>
-    </div>
-  </aside>
-  <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="toggleSidebar()"></div>
-
   <!-- Main -->
   <main class="main">
-    <div class="topbar">
-      <div class="topbar-left">
-        <button class="sidebar-toggle" id="sidebarToggleBtn" onclick="toggleSidebar()" aria-label="Collapse sidebar">☰</button>
-        <div class="topbar-title" id="topbarTitle">Dashboard</div>
-      </div>
-      <div class="topbar-right">
-        <div class="topbar-actions" id="topbarActions">
-          <button class="btn btn-primary" onclick="openNewTripModal()">+ New Trip</button>
-        </div>
-      </div>
-    </div>
+    <div class="page-trip-header" id="tripPageHeader"></div>
     <div class="content">
 
-      <!-- Dashboard -->
-      <div class="panel active" id="panel-dashboard">
-        <div class="hero-banner">
-          <h1>Plan your next <em>adventure</em></h1>
-          <!-- <p>Build detailed day-by-day itineraries, track your budget, manage bookings, and pack smart.</p> -->
-        </div>
-        <div class="section-head">
-          <h2>Your Trips</h2>
-        </div>
-        <div class="trips-grid" id="tripsGrid">
-          <div class="empty-state">
-            <div class="e-icon">✈️</div>
-            <h3>No trips yet</h3>
-            <p>Create your first trip to start planning your adventure.</p>
-            <button class="btn btn-primary" onclick="openNewTripModal()">Create a Trip</button>
-          </div>
-        </div>
-      </div>
-
       <!-- Trip Detail -->
-      <div class="panel" id="panel-trip">
-        <div class="trip-header" id="tripHeader"></div>
-
+      <div class="panel active" id="panel-trip">
         <!-- Itinerary tab -->
-        <div class="tab-panel active" id="tab-itinerary">
-          <div class="itinerary-filter-bar" id="itineraryFilterBar">
-            <button class="itinerary-filter-btn active" data-itinerary-filter="all" onclick="setItineraryFilter('all')">All</button>
-            <button class="itinerary-filter-btn" data-itinerary-filter="attraction" onclick="setItineraryFilter('attraction')">🏛️ Attraction</button>
-            <button class="itinerary-filter-btn" data-itinerary-filter="food" onclick="setItineraryFilter('food')">🍜 Food</button>
-            <button class="itinerary-filter-btn" data-itinerary-filter="transport" onclick="setItineraryFilter('transport')">🚌 Transport</button>
-            <button class="itinerary-filter-btn" data-itinerary-filter="hotel" onclick="setItineraryFilter('hotel')">🏨 Hotel</button>
-            <button class="itinerary-filter-btn" data-itinerary-filter="other" onclick="setItineraryFilter('other')">📌 Other</button>
+        <div id="tab-itinerary">
+          <div class="itinerary-mode-bar">
+            <div class="itinerary-mode-row">
+              <button class="itinerary-mode-btn active" type="button" data-trip-mode="itinerary" onclick="setTripDetailMode('itinerary')" aria-label="Itinerary mode">
+                🗺️ Itinerary <span class="itinerary-mode-count" id="itineraryModeCount">0</span>
+              </button>
+              <button class="itinerary-mode-btn" type="button" data-trip-mode="essentials" onclick="setTripDetailMode('essentials')" aria-label="Essentials mode">
+                ✅ Essentials <span class="itinerary-mode-count" id="essentialsModeCount">0</span>
+              </button>
+            </div>
+          </div>
+          <div class="itinerary-filter-shell" id="itineraryFilterShell">
+            <div class="itinerary-filter-label">Filter by type</div>
+            <div class="itinerary-filter-bar" id="itineraryFilterBar">
+              <button class="itinerary-filter-btn active" data-itinerary-filter="all" onclick="setItineraryFilter('all')"><span>✦ All</span><span class="itinerary-filter-count" data-count-for="all">0</span></button>
+              <button class="itinerary-filter-btn" data-itinerary-filter="attraction" onclick="setItineraryFilter('attraction')"><span>🏛️ Attraction</span><span class="itinerary-filter-count" data-count-for="attraction">0</span></button>
+              <button class="itinerary-filter-btn" data-itinerary-filter="food" onclick="setItineraryFilter('food')"><span>🍜 Food</span><span class="itinerary-filter-count" data-count-for="food">0</span></button>
+              <button class="itinerary-filter-btn" data-itinerary-filter="transport" onclick="setItineraryFilter('transport')"><span>🚌 Transport</span><span class="itinerary-filter-count" data-count-for="transport">0</span></button>
+              <button class="itinerary-filter-btn" data-itinerary-filter="hotel" onclick="setItineraryFilter('hotel')"><span>🏨 Hotel</span><span class="itinerary-filter-count" data-count-for="hotel">0</span></button>
+              <button class="itinerary-filter-btn" data-itinerary-filter="other" onclick="setItineraryFilter('other')"><span>📌 Other</span><span class="itinerary-filter-count" data-count-for="other">0</span></button>
+            </div>
           </div>
           <div id="daysContainer"></div>
         </div>
+        <div class="trip-considerations" id="tripConsiderationsMount"></div>
       </div>
 
       <!-- What to Consider -->
@@ -1764,22 +1187,6 @@
               <li>Sunscreen & insect repellent</li>
               <li>Reusable water bottle</li>
             </ul>
-          </div>
-        </div>
-      </div>
-
-      <!-- Settings -->
-      <div class="panel" id="panel-settings">
-        <div class="section-head" style="margin-bottom:24px;"><h2>Settings</h2></div>
-        <div class="settings-wrap">
-          <div class="settings-card">
-            <h3 class="settings-card-title">Default Currency</h3>
-            <p class="settings-card-note">Used across budget tracking</p>
-            <div class="form-group">
-              <select id="settingsCurrency" onchange="saveCurrencyPref()">
-                <option>MYR</option><option>USD</option><option>EUR</option><option>GBP</option><option>SGD</option><option>AUD</option><option>JPY</option><option>THB</option>
-              </select>
-            </div>
           </div>
         </div>
       </div>
@@ -1901,30 +1308,22 @@ let activityFxDirection = 'from';
 let syncInProgress = false;
 let offlineReadNotified = false;
 let loadDaysToken = 0;
-let sidebarCollapsed = false;
-let lastSidebarDesktopState = window.innerWidth >= 1024;
-let currentUser = null;
-let tableScopeSupport = {};
-let scopeDetectedForUserId = null;
-let authWarningShown = false;
+let tripDetailMode = 'itinerary';
 
-const DEFAULT_SUPABASE_URL = window.__VOYAGEUR_SUPABASE_URL || 'https://usnqzrkwwxhafuxidxlq.supabase.co';
-const DEFAULT_SUPABASE_ANON_KEY = window.__VOYAGEUR_SUPABASE_ANON_KEY || 'sb_publishable_h6fEKv_SWz5Z_laFKOVsEw_CxfJZRsu';
-const ENABLE_USER_SCOPE = window.__VOYAGEUR_ENABLE_USER_SCOPE === true;
-const ACCESS_MODE = String(window.__VOYAGEUR_ACCESS_MODE || 'shared').toLowerCase() === 'private' ? 'private' : 'shared';
-const SHARED_USER_ID = String(
-  window.__VOYAGEUR_SHARED_USER_ID || '7b4f26a2-b4aa-42ec-8850-1355b5d37824'
-).trim() || null;
+const DEFAULT_SUPABASE_URL = 'https://usnqzrkwwxhafuxidxlq.supabase.co';
+const DEFAULT_SUPABASE_ANON_KEY = 'sb_publishable_h6fEKv_SWz5Z_laFKOVsEw_CxfJZRsu';
+const SHARED_USER_ID = '7b4f26a2-b4aa-42ec-8850-1355b5d37824';
 const FX_API_BASE = 'https://api.frankfurter.dev/v1';
 const FX_CURRENCIES = ['AED','AUD','BGN','BRL','CAD','CHF','CNY','CZK','DKK','EUR','GBP','HKD','HUF','IDR','ILS','INR','ISK','JPY','KRW','MXN','MYR','NOK','NZD','PHP','PLN','RON','SEK','SGD','THB','TRY','USD','ZAR'];
 const FX_RATE_CACHE_PREFIX = 'voyageur_fx_rate_v1';
 const OFFLINE_CACHE_KEY = 'voyageur_offline_cache_v1';
 const OFFLINE_QUEUE_KEY = 'voyageur_sync_queue_v1';
-const SIDEBAR_COLLAPSE_KEY = 'voyageur_sidebar_collapsed_v1';
-const DB_TABLES = ['trips', 'days', 'activities', 'accommodations', 'transports', 'expenses', 'packing'];
+const DB_TABLES = ['trips', 'days', 'activities'];
 const PERF_LOG_ENABLED = window.__VOYAGEUR_PERF_LOG === true;
 const PERF_LOG_SLOW_MS = Number(window.__VOYAGEUR_PERF_SLOW_MS || 120);
 const ITINERARY_REMOTE_REFRESH_TTL_MS = Number(window.__VOYAGEUR_ITINERARY_REFRESH_TTL_MS || 60000);
+const FAMILY_TRIP_FOCUS_MODE = true;
+const FAMILY_TRIP_NAME = String(window.__VOYAGEUR_FAMILY_TRIP_NAME || 'Family Trip').trim() || 'Family Trip';
 let offlineCache = createEmptyCache();
 let syncQueue = [];
 const perfTraceStore = [];
@@ -1934,8 +1333,6 @@ let lastItineraryRenderSignature = '';
 // ─── Config ──────────────────────────────────────────────────────────────
 function initApp() {
   bindConnectivityEvents();
-  initSidebarState();
-  window.addEventListener('resize', syncSidebarWithViewport);
   document.addEventListener('click', handleActionMenuDocumentClick);
 
   currency = localStorage.getItem('def_currency') || 'MYR';
@@ -1950,7 +1347,7 @@ function initApp() {
       toast('Supabase client unavailable. Check script loading.', 'error');
       return;
     }
-    initGuestAuthFlow();
+    initDataFlow();
   } catch (e) {
     console.error(e);
     toast('App initialization failed. Refresh and try again.', 'error');
@@ -1959,13 +1356,103 @@ function initApp() {
 
 function launchApp() {
   document.getElementById('mainApp').style.display = 'flex';
-  document.getElementById('settingsCurrency').value = currency;
-  loadDashboard();
+  initSingleTripFocus();
 }
 
-function saveCurrencyPref() {
-  currency = document.getElementById('settingsCurrency').value;
-  localStorage.setItem('def_currency', currency);
+function mountConsiderationsIntoTrip() {
+  const mount = document.getElementById('tripConsiderationsMount');
+  const source = document.getElementById('panel-considerations');
+  if (!mount || !source || mount.dataset.mounted === '1') return;
+  const sourceGrid = source.querySelector('.considerations-grid');
+  if (!sourceGrid) return;
+  mount.innerHTML = `
+    <div class="section-head" style="margin-bottom:24px;">
+      <h2>Trip Essentials</h2>
+    </div>
+    <div class="considerations-grid">${sourceGrid.innerHTML}</div>`;
+  mount.dataset.mounted = '1';
+}
+
+function updateTripDetailFilterView() {
+  const daysContainer = document.getElementById('daysContainer');
+  const essentialsMount = document.getElementById('tripConsiderationsMount');
+  const filterShell = document.getElementById('itineraryFilterShell');
+  const showEssentials = tripDetailMode === 'essentials';
+  if (daysContainer) daysContainer.style.display = showEssentials ? 'none' : '';
+  if (essentialsMount) essentialsMount.style.display = showEssentials ? 'block' : 'none';
+  if (filterShell) filterShell.style.display = showEssentials ? 'none' : '';
+}
+
+function updateTripDetailModeUI() {
+  document.querySelectorAll('[data-trip-mode]').forEach(btn => {
+    const mode = btn.getAttribute('data-trip-mode');
+    btn.classList.toggle('active', mode === tripDetailMode);
+  });
+}
+
+function getEssentialsModeCount() {
+  const mountedCards = document.querySelectorAll('#tripConsiderationsMount .consider-card').length;
+  if (mountedCards > 0) return mountedCards;
+  return document.querySelectorAll('#panel-considerations .consider-card').length;
+}
+
+function setTripDetailMode(mode) {
+  tripDetailMode = mode === 'essentials' ? 'essentials' : 'itinerary';
+  updateTripDetailModeUI();
+  updateTripDetailFilterView();
+}
+
+function updateItineraryFilterCounts(activities = [], days = []) {
+  const counts = { all: 0, attraction: 0, food: 0, transport: 0, hotel: 0, other: 0 };
+  (activities || []).forEach(activity => {
+    const cat = normalizeActivityCategory(activity?.category);
+    counts.all += 1;
+    counts[cat] = (counts[cat] || 0) + 1;
+  });
+  document.querySelectorAll('[data-count-for]').forEach(el => {
+    const key = String(el.getAttribute('data-count-for') || '');
+    if (!(key in counts)) return;
+    el.textContent = String(counts[key]);
+  });
+  const modeCount = document.getElementById('itineraryModeCount');
+  if (modeCount) modeCount.textContent = String((days || []).length);
+  const essentialsCount = document.getElementById('essentialsModeCount');
+  if (essentialsCount) essentialsCount.textContent = String(getEssentialsModeCount());
+}
+
+function applySingleTripUi() {
+  mountConsiderationsIntoTrip();
+  const considerationsPanel = document.getElementById('panel-considerations');
+  if (considerationsPanel) considerationsPanel.style.display = 'none';
+}
+
+function hideTripPageHeader() {
+  const header = document.getElementById('tripPageHeader');
+  if (!header) return;
+  header.classList.remove('active');
+  header.innerHTML = '';
+}
+
+function pickSingleTrip(trips) {
+  const rows = Array.isArray(trips) ? trips : [];
+  if (!rows.length) return null;
+  const byName = rows.find(t => String(t?.name || '').trim().toLowerCase() === FAMILY_TRIP_NAME.toLowerCase());
+  return byName || rows[0];
+}
+
+async function initSingleTripFocus() {
+  applySingleTripUi();
+  const trips = await dbQuery('trips');
+  const target = pickSingleTrip(trips);
+  if (!target) {
+    hideTripPageHeader();
+    openNewTripModal();
+    const tripNameInput = document.getElementById('fTripName');
+    if (tripNameInput && !tripNameInput.value.trim()) tripNameInput.value = FAMILY_TRIP_NAME;
+    toast('Create your Family Trip to start', 'error');
+    return;
+  }
+  await openTrip(target.id, { preferCache: true, backgroundRefresh: true, disableLegacyActivityFallback: true });
 }
 
 function escapeHtml(value) {
@@ -2026,170 +1513,20 @@ function normalizeActivityCategory(value) {
 }
 
 function scopedStorageKey(base) {
-  return `${base}_${currentUser?.id || 'anon'}`;
+  return base;
 }
 
-function requireAuthSession() {
-  if (!ENABLE_USER_SCOPE) return true;
-  if (currentUser) return true;
-  if (!authWarningShown) {
-    toast('Guest auth unavailable. Enable Supabase Anonymous Sign-Ins.', 'error');
-    authWarningShown = true;
-  }
-  return false;
+function withSharedUserIdPayload(payload, includeUserId = false) {
+  if (!includeUserId || !SHARED_USER_ID) return { ...payload };
+  return { ...payload, user_id: SHARED_USER_ID };
 }
 
-function hasUserScope(table) {
-  return ACCESS_MODE === 'private' && !!currentUser && tableScopeSupport[table] === true;
-}
-
-function getWriteUserId() {
-  if (currentUser?.id) return currentUser.id;
-  if (!ENABLE_USER_SCOPE && SHARED_USER_ID) return SHARED_USER_ID;
-  return null;
-}
-
-function shouldAttachUserId(table) {
-  if (currentUser?.id) return tableScopeSupport[table] === true;
-  if (!ENABLE_USER_SCOPE && SHARED_USER_ID) return true;
-  return false;
-}
-
-function withUserScopePayload(table, payload, includeUserId = false) {
-  if (!includeUserId || !shouldAttachUserId(table)) return { ...payload };
-  const userId = getWriteUserId();
-  if (!userId) return { ...payload };
-  return { ...payload, user_id: userId };
-}
-
-function applyUserScopeToQuery(query, table) {
-  if (!hasUserScope(table)) return query;
-  return query.eq('user_id', currentUser.id);
-}
-
-function applyUserScopeToMutation(query, table, id) {
-  let q = query.eq('id', id);
-  if (hasUserScope(table)) q = q.eq('user_id', currentUser.id);
-  return q;
-}
-
-async function initGuestAuthFlow() {
+async function initDataFlow() {
   if (!sbClient) return;
-  currentUser = null;
-  authWarningShown = false;
-
-  if (!ENABLE_USER_SCOPE) {
-    loadOfflineState();
-    await detectUserScopeCapability();
-    launchApp();
-    updateSyncStatusBadge();
-    syncPendingOperations();
-    return;
-  }
-
-  try {
-    const { data, error } = await sbClient.auth.getSession();
-    if (error) throw error;
-    currentUser = data?.session?.user || null;
-
-    if (!currentUser && typeof sbClient.auth.signInAnonymously === 'function') {
-      const { data: anonData, error: anonError } = await sbClient.auth.signInAnonymously();
-      if (anonError) throw anonError;
-      currentUser = anonData?.user || anonData?.session?.user || null;
-    }
-  } catch (error) {
-    console.warn('Automatic guest auth failed:', error?.message || error);
-    currentUser = null;
-  }
-
-  if (currentUser) {
-    loadOfflineState();
-  } else {
-    offlineCache = createEmptyCache();
-    syncQueue = [];
-    persistOfflineCache();
-    persistSyncQueue();
-  }
-
-  await detectUserScopeCapability();
+  loadOfflineState();
   launchApp();
   updateSyncStatusBadge();
   syncPendingOperations();
-}
-
-async function detectUserScopeCapability() {
-  const scopeKey = currentUser?.id || 'anon';
-  if (!sbClient || scopeDetectedForUserId === scopeKey) return;
-
-  tableScopeSupport = {};
-  DB_TABLES.forEach(table => {
-    tableScopeSupport[table] = ENABLE_USER_SCOPE && !!currentUser;
-  });
-  scopeDetectedForUserId = scopeKey;
-
-  if (!ENABLE_USER_SCOPE) {
-    // Shared mode intentionally skips auth-based row filters.
-  } else if (!currentUser) {
-    console.warn('Anonymous auth is disabled in Supabase. Enable it to use app without login UI.');
-  } else if (ACCESS_MODE === 'shared') {
-    console.info('Shared mode enabled: authenticated users can see/edit shared data.');
-  }
-}
-
-function applySidebarState(collapsed) {
-  sidebarCollapsed = !!collapsed;
-  const app = document.getElementById('mainApp');
-  if (app) app.classList.toggle('sidebar-collapsed', sidebarCollapsed);
-
-  const toggleBtn = document.getElementById('sidebarToggleBtn');
-  if (toggleBtn) {
-    toggleBtn.textContent = sidebarCollapsed ? '☰' : '☷';
-    toggleBtn.setAttribute('aria-label', sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar');
-    toggleBtn.title = sidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar';
-  }
-
-  const wordmark = document.getElementById('sidebarWordmark');
-  if (wordmark) {
-    const full = wordmark.getAttribute('data-full') || 'Voyageur';
-    const short = wordmark.getAttribute('data-short') || 'V';
-    wordmark.textContent = sidebarCollapsed ? short : full;
-  }
-}
-
-function initSidebarState() {
-  lastSidebarDesktopState = window.innerWidth >= 1024;
-  if (window.innerWidth < 1024) {
-    applySidebarState(true);
-    return;
-  }
-  const saved = localStorage.getItem(SIDEBAR_COLLAPSE_KEY);
-  applySidebarState(saved === null ? false : saved === '1');
-}
-
-function toggleSidebar() {
-  const next = !sidebarCollapsed;
-  applySidebarState(next);
-  if (window.innerWidth < 1024) return;
-  localStorage.setItem(SIDEBAR_COLLAPSE_KEY, next ? '1' : '0');
-}
-
-function closeSidebarOnMobile() {
-  if (window.innerWidth >= 1024 || sidebarCollapsed) return;
-  applySidebarState(true);
-}
-
-function syncSidebarWithViewport() {
-  const isDesktop = window.innerWidth >= 1024;
-  if (isDesktop === lastSidebarDesktopState) return;
-  lastSidebarDesktopState = isDesktop;
-
-  if (!isDesktop) {
-    applySidebarState(true);
-    return;
-  }
-
-  const saved = localStorage.getItem(SIDEBAR_COLLAPSE_KEY);
-  applySidebarState(saved === null ? false : saved === '1');
 }
 
 // ─── Offline helpers ─────────────────────────────────────────────────────
@@ -2415,8 +1752,7 @@ function enqueueSyncOperation(op) {
 }
 
 async function syncPendingOperations() {
-  const hasWriteIdentity = !!currentUser || (!ENABLE_USER_SCOPE && !!SHARED_USER_ID);
-  if (!sbClient || !hasWriteIdentity || !isOnline() || syncInProgress || !syncQueue.length) {
+  if (!sbClient || !isOnline() || syncInProgress || !syncQueue.length) {
     updateSyncStatusBadge();
     return;
   }
@@ -2429,16 +1765,16 @@ async function syncPendingOperations() {
     const item = syncQueue[0];
     try {
       if (item.op === 'insert') {
-        const payload = withUserScopePayload(item.table, item.payload || {}, true);
+        const payload = withSharedUserIdPayload(item.payload || {}, true);
         const { error } = await sbClient.from(item.table).upsert(payload, { onConflict: 'id' });
         if (error) throw error;
       } else if (item.op === 'update') {
-        const payload = withUserScopePayload(item.table, item.payload || {});
-        const mutation = applyUserScopeToMutation(sbClient.from(item.table).update(payload), item.table, item.id);
+        const payload = withSharedUserIdPayload(item.payload || {});
+        const mutation = sbClient.from(item.table).update(payload).eq('id', item.id);
         const { error } = await mutation;
         if (error) throw error;
       } else if (item.op === 'delete') {
-        const mutation = applyUserScopeToMutation(sbClient.from(item.table).delete(), item.table, item.id);
+        const mutation = sbClient.from(item.table).delete().eq('id', item.id);
         const { error } = await mutation;
         if (error) throw error;
       }
@@ -2465,10 +1801,6 @@ async function syncPendingOperations() {
 async function dbQuery(table, filters = {}, options = {}) {
   const { preferCache = false, skipRemote = false } = options || {};
   const trace = perfBegin('dbQuery', { table, filterKeys: Object.keys(filters) });
-  if (!requireAuthSession()) {
-    perfEnd(trace, { source: 'blocked_auth', rows: 0 });
-    return [];
-  }
   const cachedRows = getCachedRows(table, filters);
   if (preferCache) {
     perfEnd(trace, { source: 'cache_preferred', rows: cachedRows.length });
@@ -2480,7 +1812,7 @@ async function dbQuery(table, filters = {}, options = {}) {
   }
   if (sbClient && isOnline()) {
     try {
-      let q = applyUserScopeToQuery(sbClient.from(table).select('*'), table);
+      let q = sbClient.from(table).select('*');
       for (const [k, v] of Object.entries(filters)) q = q.eq(k, v);
       const { data, error } = await q.order('created_at', { ascending: true });
       if (error) throw error;
@@ -2507,10 +1839,6 @@ async function dbQuery(table, filters = {}, options = {}) {
 async function dbGetById(table, id, options = {}) {
   const { preferCache = true } = options || {};
   const trace = perfBegin('dbGetById', { table, id, preferCache });
-  if (!requireAuthSession()) {
-    perfEnd(trace, { source: 'blocked_auth', found: false });
-    return null;
-  }
   const cached = getCachedById(table, id);
   const hasQueuedDelete = syncQueue.some(op => op.table === table && op.id === id && op.op === 'delete');
   if (hasQueuedDelete) {
@@ -2525,7 +1853,7 @@ async function dbGetById(table, id, options = {}) {
 
   if (sbClient && isOnline()) {
     try {
-      let q = applyUserScopeToQuery(sbClient.from(table).select('*'), table).eq('id', id);
+      let q = sbClient.from(table).select('*').eq('id', id);
       const { data, error } = await q.single();
       if (error) throw error;
       const rows = applyQueuedOpsToRows(table, data ? [data] : []);
@@ -2542,8 +1870,7 @@ async function dbGetById(table, id, options = {}) {
 }
 
 async function dbInsert(table, obj) {
-  if (!requireAuthSession()) return null;
-  const localPayload = withUserScopePayload(table, obj || {}, true);
+  const localPayload = withSharedUserIdPayload(obj || {}, true);
   const localRow = upsertCachedRow(table, { ...localPayload, id: localPayload?.id || makeClientId() });
   if (!sbClient || !isOnline()) {
     enqueueSyncOperation({ op: 'insert', table, id: localRow.id, payload: localRow });
@@ -2551,7 +1878,7 @@ async function dbInsert(table, obj) {
   }
 
   try {
-    const payload = withUserScopePayload(table, localRow, true);
+    const payload = withSharedUserIdPayload(localRow, true);
     const { data, error } = await sbClient.from(table).upsert(payload, { onConflict: 'id' }).select().single();
     if (error) throw error;
     if (data) upsertCachedRow(table, data);
@@ -2563,24 +1890,17 @@ async function dbInsert(table, obj) {
       return localRow;
     }
     removeCachedRow(table, localRow.id);
-    const msg = String(error?.message || '');
-    if (!ENABLE_USER_SCOPE && !SHARED_USER_ID && /user_id|null value/i.test(msg)) {
-      toast('DB requires user_id. Set window.__VOYAGEUR_SHARED_USER_ID to an auth.users UUID.', 'error');
-      console.error('Insert blocked: missing shared user id for user_id-protected schema.', error);
-      return null;
-    }
     toast('DB error: ' + error.message, 'error');
     return null;
   }
 }
 
 async function dbInsertMany(table, rows) {
-  if (!requireAuthSession()) return [];
   const inputRows = Array.isArray(rows) ? rows.filter(Boolean) : [];
   if (!inputRows.length) return [];
 
   const localRows = inputRows.map(row => {
-    const scoped = withUserScopePayload(table, row || {}, true);
+    const scoped = withSharedUserIdPayload(row || {}, true);
     return upsertCachedRow(table, { ...scoped, id: scoped?.id || makeClientId() });
   });
 
@@ -2592,7 +1912,7 @@ async function dbInsertMany(table, rows) {
   }
 
   try {
-    const payload = localRows.map(row => withUserScopePayload(table, row, true));
+    const payload = localRows.map(row => withSharedUserIdPayload(row, true));
     const { data, error } = await sbClient.from(table).upsert(payload, { onConflict: 'id' }).select();
     if (error) throw error;
     if (Array.isArray(data) && data.length) mergeCachedRows(table, data);
@@ -2607,19 +1927,12 @@ async function dbInsertMany(table, rows) {
     }
 
     localRows.forEach(localRow => removeCachedRow(table, localRow.id));
-    const msg = String(error?.message || '');
-    if (!ENABLE_USER_SCOPE && !SHARED_USER_ID && /user_id|null value/i.test(msg)) {
-      toast('DB requires user_id. Set window.__VOYAGEUR_SHARED_USER_ID to an auth.users UUID.', 'error');
-      console.error('Bulk insert blocked: missing shared user id for user_id-protected schema.', error);
-      return [];
-    }
     toast('DB error: ' + error.message, 'error');
     return [];
   }
 }
 
 async function dbDelete(table, id) {
-  if (!requireAuthSession()) return false;
   const backup = getCachedById(table, id);
   removeCachedRow(table, id);
 
@@ -2629,7 +1942,7 @@ async function dbDelete(table, id) {
   }
 
   try {
-    const mutation = applyUserScopeToMutation(sbClient.from(table).delete(), table, id);
+    const mutation = sbClient.from(table).delete().eq('id', id);
     const { error } = await mutation;
     if (error) throw error;
     return true;
@@ -2646,9 +1959,8 @@ async function dbDelete(table, id) {
 }
 
 async function dbUpdate(table, id, obj) {
-  if (!requireAuthSession()) return false;
   const backup = getCachedById(table, id);
-  const localPatch = withUserScopePayload(table, obj || {});
+  const localPatch = withSharedUserIdPayload(obj || {});
   updateCachedRow(table, id, localPatch);
 
   if (!sbClient || !isOnline()) {
@@ -2657,7 +1969,7 @@ async function dbUpdate(table, id, obj) {
   }
 
   try {
-    const mutation = applyUserScopeToMutation(sbClient.from(table).update(localPatch), table, id);
+    const mutation = sbClient.from(table).update(localPatch).eq('id', id);
     const { error } = await mutation;
     if (error) throw error;
     return true;
@@ -2673,86 +1985,8 @@ async function dbUpdate(table, id, obj) {
   }
 }
 
-// ─── Navigation ──────────────────────────────────────────────────────────
-function showPanel(name) {
-  closeSidebarOnMobile();
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelector(`#panel-${name}`)?.classList.add('active');
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-  const panelTitles = { dashboard:'Dashboard', considerations:'What to Consider', settings:'Settings' };
-  document.getElementById('topbarTitle').textContent = panelTitles[name] || 'Dashboard';
-  const acts = document.getElementById('topbarActions');
-  acts.innerHTML = name === 'dashboard' ? '<button class="btn btn-primary" onclick="openNewTripModal()">+ New Trip</button>' : '';
-  if (name === 'dashboard') { document.querySelector('.nav-item').classList.add('active'); loadDashboard(); }
-  if (name === 'considerations') { document.querySelectorAll('.nav-item')[1].classList.add('active'); }
-  if (name === 'settings') { document.querySelectorAll('.nav-item')[2].classList.add('active'); }
-}
-
-// ─── Dashboard ───────────────────────────────────────────────────────────
-async function loadDashboard() {
-  const trips = await dbQuery('trips');
-  renderSidebar(trips);
-  renderTripsGrid(trips);
-}
-
-function renderSidebar(trips) {
-  const el = document.getElementById('sidebarTrips');
-  if (!trips.length) { el.innerHTML = '<div style="padding:8px 12px;font-size:13px;color:rgba(255,255,255,0.3);font-style:italic;">No trips yet</div>'; return; }
-  el.innerHTML = trips.map(t => `
-    <div class="trip-chip ${t.id === currentTripId ? 'active' : ''}" onclick="openTrip('${safeJsArg(t.id)}')">
-      <span class="dot"></span>${safeText(t.flag || '')} ${safeText(t.name || 'Untitled Trip')}
-    </div>`).join('');
-}
-
-function renderTripsGrid(trips) {
-  const el = document.getElementById('tripsGrid');
-  if (!trips.length) {
-    el.innerHTML = `<div class="empty-state"><div class="e-icon">✈️</div><h3>No trips yet</h3><p>Create your first trip to start planning your adventure.</p><button class="btn btn-primary" onclick="openNewTripModal()">Create a Trip</button></div>`;
-    return;
-  }
-  el.innerHTML = trips.map(t => {
-    const days = t.end_date && t.start_date ? Math.ceil((new Date(t.end_date)-new Date(t.start_date))/(1000*60*60*24))+1 : '?';
-    return `<div class="trip-card" onclick="openTrip('${safeJsArg(t.id)}')">
-      <div class="trip-card-banner">
-        <div class="trip-card-flag">${safeText(t.flag || '🌍')}</div>
-        <div class="trip-card-dest">${safeText(t.destination || 'Unknown destination')}</div>
-      </div>
-      <div class="trip-card-body">
-        <div class="trip-card-name">${safeText(t.name || 'Untitled Trip')}</div>
-        <div class="trip-card-dates">${formatDate(t.start_date)} → ${formatDate(t.end_date)}</div>
-      </div>
-      <div class="trip-card-footer">
-        <span class="badge badge-forest">${days} days</span>
-        <span class="badge badge-gold">${safeText(t.currency || currency)} ${Number(t.budget||0).toLocaleString()}</span>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function formatDateTime(value) {
-  if (!value) return '-';
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return String(value).replace('T', ' ');
-  return date.toLocaleString(undefined, {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-}
-
 function buildTripPdfHtml(payload) {
-  const {
-    trip,
-    days,
-    activities,
-    accommodations,
-    transports,
-    expenses,
-    packing,
-    totalExpense
-  } = payload;
+  const { trip, days, activities } = payload;
   const tripCurrency = trip?.currency || currency || 'MYR';
   const activitiesByDay = new Map();
   (activities || []).forEach(item => {
@@ -2788,58 +2022,10 @@ function buildTripPdfHtml(payload) {
     `;
   }).join('');
 
-  const accomHtml = (accommodations || []).length
-    ? accommodations.map(item => `
-      <div class="row">
-        <div class="name">${safeText(item.name || 'Accommodation')}</div>
-        <div class="detail">${safeText(item.address || '-')}</div>
-        <div class="detail">${item.check_in ? `Check-in: ${safeText(formatDate(item.check_in))}` : ''}</div>
-        <div class="detail">${item.check_out ? `Check-out: ${safeText(formatDate(item.check_out))}` : ''}</div>
-      </div>
-    `).join('')
-    : '<div class="empty">No accommodation records</div>';
-
-  const transportHtml = (transports || []).length
-    ? transports.map(item => `
-      <div class="row">
-        <div class="name">${safeText(item.type || 'Transport')}</div>
-        <div class="detail">${safeText(item.from_location || '-')} → ${safeText(item.to_location || '-')}</div>
-        <div class="detail">Dep: ${safeText(formatDateTime(item.departure))} · Arr: ${safeText(formatDateTime(item.arrival))}</div>
-      </div>
-    `).join('')
-    : '<div class="empty">No transport records</div>';
-
-  const expenseHtml = (expenses || []).length
-    ? expenses.map(item => `
-      <div class="row">
-        <div class="name">${safeText(item.item || 'Expense')}</div>
-        <div class="detail">${safeText(item.category || '')}</div>
-        <div class="detail">${safeText(formatDate(item.date))}</div>
-        <div class="detail">${safeText(tripCurrency)} ${Number(item.amount || 0).toLocaleString()}</div>
-      </div>
-    `).join('')
-    : '<div class="empty">No expenses recorded</div>';
-
-  const packByCategory = {};
-  (packing || []).forEach(item => {
-    const key = String(item.category || 'Other');
-    if (!packByCategory[key]) packByCategory[key] = [];
-    packByCategory[key].push(item);
-  });
-  const packingHtml = Object.keys(packByCategory).length
-    ? Object.entries(packByCategory).map(([cat, items]) => `
-      <section class="card">
-        <h3>${safeText(cat)}</h3>
-        <div class="rows">
-          ${items.map(item => `<div class="row"><div class="name">${item.packed ? '✓' : '•'} ${safeText(item.item || '')}</div></div>`).join('')}
-        </div>
-      </section>
-    `).join('')
-    : '<div class="empty">No packing items</div>';
-
   const dayCount = trip?.start_date && trip?.end_date
     ? Math.ceil((new Date(trip.end_date) - new Date(trip.start_date)) / (1000 * 60 * 60 * 24)) + 1
     : (days || []).length;
+  const totalCost = (activities || []).reduce((sum, item) => sum + Number(item.cost || 0), 0);
 
   return `<!doctype html>
 <html>
@@ -2884,25 +2070,13 @@ function buildTripPdfHtml(payload) {
       <div class="meta">${safeText(formatDate(trip?.start_date))} → ${safeText(formatDate(trip?.end_date))} · ${dayCount} days</div>
       <div class="summary">
         <div class="pill"><div class="k">Budget</div><div class="v">${safeText(tripCurrency)} ${Number(trip?.budget || 0).toLocaleString()}</div></div>
-        <div class="pill"><div class="k">Spent</div><div class="v">${safeText(tripCurrency)} ${Number(totalExpense || 0).toLocaleString()}</div></div>
+        <div class="pill"><div class="k">Estimated Cost</div><div class="v">${safeText(tripCurrency)} ${Number(totalCost || 0).toLocaleString()}</div></div>
         <div class="pill"><div class="k">Generated</div><div class="v">${safeText(formatDate(new Date().toISOString().slice(0, 10)))}</div></div>
       </div>
     </div>
 
     <div class="section-title">Itinerary</div>
     ${dayBlocks || '<div class="empty">No days available</div>'}
-
-    <div class="section-title">Accommodation</div>
-    <section class="card"><div class="rows">${accomHtml}</div></section>
-
-    <div class="section-title">Transport</div>
-    <section class="card"><div class="rows">${transportHtml}</div></section>
-
-    <div class="section-title">Expenses</div>
-    <section class="card"><div class="rows">${expenseHtml}</div></section>
-
-    <div class="section-title">Packing</div>
-    ${packingHtml}
   </div>
 </body>
 </html>`;
@@ -2929,33 +2103,18 @@ async function exportCurrentTripToPdf() {
       || await dbGetById('trips', currentTripId, { preferCache: false });
     if (!trip) throw new Error('Trip not found');
 
-    let [daysRaw, activitiesRaw, accommodationsRaw, transportsRaw, expensesRaw, packingRaw] = await Promise.all([
+    let [daysRaw, activitiesRaw] = await Promise.all([
       dbQuery('days', { trip_id: currentTripId }, { preferCache: true }),
-      dbQuery('activities', { trip_id: currentTripId }, { preferCache: true }),
-      dbQuery('accommodations', { trip_id: currentTripId }, { preferCache: true }),
-      dbQuery('transports', { trip_id: currentTripId }, { preferCache: true }),
-      dbQuery('expenses', { trip_id: currentTripId }, { preferCache: true }),
-      dbQuery('packing', { trip_id: currentTripId }, { preferCache: true })
+      dbQuery('activities', { trip_id: currentTripId }, { preferCache: true })
     ]);
 
-    const cacheCold = [
-      daysRaw,
-      activitiesRaw,
-      accommodationsRaw,
-      transportsRaw,
-      expensesRaw,
-      packingRaw
-    ].every(list => Array.isArray(list) && list.length === 0);
+    const cacheCold = [daysRaw, activitiesRaw].every(list => Array.isArray(list) && list.length === 0);
 
     if (isOnline()) {
       if (cacheCold) {
-        [daysRaw, activitiesRaw, accommodationsRaw, transportsRaw, expensesRaw, packingRaw] = await Promise.all([
+        [daysRaw, activitiesRaw] = await Promise.all([
           dbQuery('days', { trip_id: currentTripId }),
-          dbQuery('activities', { trip_id: currentTripId }),
-          dbQuery('accommodations', { trip_id: currentTripId }),
-          dbQuery('transports', { trip_id: currentTripId }),
-          dbQuery('expenses', { trip_id: currentTripId }),
-          dbQuery('packing', { trip_id: currentTripId })
+          dbQuery('activities', { trip_id: currentTripId })
         ]);
       } else {
         if (!daysRaw.length) daysRaw = await dbQuery('days', { trip_id: currentTripId });
@@ -2966,21 +2125,11 @@ async function exportCurrentTripToPdf() {
     const days = [...daysRaw].sort((a, b) => (a.day_number || 0) - (b.day_number || 0));
     const dayIdSet = new Set(days.map(item => item.id));
     const activities = (activitiesRaw || []).filter(item => dayIdSet.has(item.day_id));
-    const accommodations = [...(accommodationsRaw || [])];
-    const transports = [...(transportsRaw || [])];
-    const expenses = [...(expensesRaw || [])].sort((a, b) => String(a.date || '').localeCompare(String(b.date || '')));
-    const packing = [...(packingRaw || [])];
-    const totalExpense = expenses.reduce((sum, item) => sum + Number(item.amount || 0), 0);
 
     const html = buildTripPdfHtml({
       trip,
       days,
-      activities,
-      accommodations,
-      transports,
-      expenses,
-      packing,
-      totalExpense
+      activities
     });
 
     printWindow.document.open();
@@ -3000,9 +2149,9 @@ async function exportCurrentTripToPdf() {
 async function openTrip(tripId, options = {}) {
   const { preferCache = true, backgroundRefresh = true, disableLegacyActivityFallback = true } = options || {};
   const trace = perfBegin('openTrip', { tripId });
-  closeSidebarOnMobile();
   currentTripId = tripId;
   expandedDayIds.clear();
+  tripDetailMode = 'itinerary';
   itineraryCategoryFilter = 'all';
   const fetchTrace = perfBegin('openTrip.fetchTrips', { tripId });
   let trips = await dbQuery('trips', {}, { preferCache });
@@ -3022,33 +2171,33 @@ async function openTrip(tripId, options = {}) {
     : '?';
   const safeTripId = safeJsArg(tripId);
 
-  document.getElementById('tripHeader').innerHTML = `
-    <div>
-      <div class="trip-header-eyebrow">${safeText(currentTripData.destination)}</div>
-      <div class="trip-header-title">${safeText(currentTripData.flag||'🌍')} ${safeText(currentTripData.name || 'Untitled Trip')}</div>
-      <div class="trip-header-meta">${formatDate(currentTripData.start_date)} → ${formatDate(currentTripData.end_date)} · <span>${days} days</span></div>
-      ${currentTripData.notes ? `<div class="trip-header-note">${safeText(currentTripData.notes)}</div>` : ''}
-    </div>
-    <div class="trip-header-actions">
-      <div class="header-kebab" id="tripHeaderActionsMenu">
-        <button class="header-kebab-btn" type="button" title="Trip actions" aria-label="Trip actions" onclick="toggleHeaderActionsMenu('tripHeaderActionsMenu', event)">⋮</button>
-        <div class="header-kebab-menu" role="menu" onclick="event.stopPropagation()">
-          <button class="header-kebab-item edit" type="button" onclick="closeAllActionMenus(); openEditTripModal('${safeTripId}')">✏️ Edit Trip</button>
-          <button class="header-kebab-item delete" type="button" onclick="closeAllActionMenus(); deleteTrip('${safeTripId}')">🗑️ Delete Trip</button>
+  const pageHeader = document.getElementById('tripPageHeader');
+  if (pageHeader) {
+    pageHeader.innerHTML = `
+      <div class="trip-header">
+        <div>
+          <div class="trip-header-eyebrow">${safeText(currentTripData.destination)}</div>
+          <div class="trip-header-title">${safeText(currentTripData.flag||'🌍')} ${safeText(currentTripData.name || 'Untitled Trip')}</div>
+          <div class="trip-header-meta">${formatDate(currentTripData.start_date)} → ${formatDate(currentTripData.end_date)} · <span>${days} days</span></div>
+          ${currentTripData.notes ? `<div class="trip-header-note">${safeText(currentTripData.notes)}</div>` : ''}
         </div>
-      </div>
-    </div>`;
+        <div class="trip-header-actions">
+          <div class="header-kebab" id="tripHeaderActionsMenu">
+            <button class="header-kebab-btn" type="button" title="Trip actions" aria-label="Trip actions" onclick="toggleHeaderActionsMenu('tripHeaderActionsMenu', event)">⋮</button>
+            <div class="header-kebab-menu" role="menu" onclick="event.stopPropagation()">
+              <button class="header-kebab-item edit" type="button" onclick="closeAllActionMenus(); openEditTripModal('${safeTripId}')">✏️ Edit Trip</button>
+              <button class="header-kebab-item edit" type="button" onclick="closeAllActionMenus(); exportCurrentTripToPdf()">📄 Export PDF</button>
+            </div>
+          </div>
+        </div>
+      </div>`;
+    pageHeader.classList.add('active');
+  }
 
   document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
   document.getElementById('panel-trip').classList.add('active');
-  document.getElementById('topbarTitle').textContent = currentTripData.name;
-  document.getElementById('topbarActions').innerHTML = '<button class="btn btn-secondary" onclick="exportCurrentTripToPdf()">Export PDF</button>';
+  mountConsiderationsIntoTrip();
 
-  // Ensure itinerary panel is visible.
-  document.querySelectorAll('.tab-panel').forEach(t => t.classList.remove('active'));
-  document.getElementById('tab-itinerary').classList.add('active');
-
-  renderSidebar(trips);
   const daysTrace = perfBegin('openTrip.loadDays', { tripId });
   await loadDays({ preferCache, allowLegacyFallback: !disableLegacyActivityFallback });
   perfEnd(daysTrace, { tripId });
@@ -3062,31 +2211,6 @@ async function openTrip(tripId, options = {}) {
     }, 0);
   }
   perfEnd(trace, { status: 'ok' });
-}
-
-async function deleteTrip(id) {
-  if (!confirm('Delete this trip and all its data?')) return;
-  const dayRows = await dbQuery('days', { trip_id: id });
-  for (const day of dayRows) {
-    const dayActivities = await dbQuery('activities', { day_id: day.id });
-    for (const activity of dayActivities) await dbDelete('activities', activity.id);
-  }
-  const activitiesByTrip = await dbQuery('activities', { trip_id: id });
-  for (const activity of activitiesByTrip) await dbDelete('activities', activity.id);
-  for (const day of dayRows) await dbDelete('days', day.id);
-
-  const dependentTables = ['accommodations', 'transports', 'expenses', 'packing'];
-  for (const table of dependentTables) {
-    const rows = await dbQuery(table, { trip_id: id });
-    for (const row of rows) await dbDelete(table, row.id);
-  }
-  await dbDelete('trips', id);
-  if (currentTripId === id) {
-    currentTripId = null;
-    currentTripData = null;
-  }
-  toast('Trip deleted');
-  showPanel('dashboard');
 }
 
 // ─── Days & Activities ────────────────────────────────────────────────────
@@ -3167,6 +2291,9 @@ async function loadDays(options = {}) {
   const trace = perfBegin('loadDays', { tripId: currentTripId, filter: itineraryCategoryFilter });
   closeAllActionMenus();
   const requestToken = ++loadDaysToken;
+  updateItineraryFilterUI();
+  updateTripDetailModeUI();
+  updateTripDetailFilterView();
 
   const lastRemoteAt = itineraryRemoteLoadAtByTrip.get(currentTripId) || 0;
   const remoteFresh = !!lastRemoteAt && (Date.now() - lastRemoteAt < ITINERARY_REMOTE_REFRESH_TTL_MS);
@@ -3190,9 +2317,9 @@ async function loadDays(options = {}) {
   const renderTrace = perfBegin('loadDays.render', { tripId: currentTripId });
   days.sort((a,b) => (a.day_number||0) - (b.day_number||0));
   const container = document.getElementById('daysContainer');
-  updateItineraryFilterUI();
 
   if (!days.length) {
+    updateItineraryFilterCounts([], []);
     container.innerHTML = `<div class="empty-state"><div class="e-icon">📅</div><h3>No days added yet</h3><p>Start building your day-by-day itinerary.</p></div>`;
     lastItineraryRenderSignature = `${currentTripId || ''}::${itineraryCategoryFilter || 'all'}::empty`;
     perfEnd(renderTrace, { renderedDays: 0, renderedActivities: 0 });
@@ -3207,7 +2334,7 @@ async function loadDays(options = {}) {
     if (sbClient && isOnline()) {
       try {
         const fallbackTrace = perfBegin('loadDays.activitiesFallbackQuery', { dayIdCount: dayIds.length });
-        let q = applyUserScopeToQuery(sbClient.from('activities').select('*'), 'activities');
+        let q = sbClient.from('activities').select('*');
         q = q.in('day_id', dayIds).order('created_at', { ascending: true });
         const { data, error } = await q;
         if (error) throw error;
@@ -3238,6 +2365,7 @@ async function loadDays(options = {}) {
   for (const list of activitiesByDay.values()) {
     list.sort((a, b) => (a.time || '').localeCompare(b.time || ''));
   }
+  updateItineraryFilterCounts(tripActivities, days);
 
   const signature = buildItineraryRenderSignature(days, tripActivities, itineraryCategoryFilter);
   if (!preferCache && signature === lastItineraryRenderSignature) {
@@ -3332,6 +2460,9 @@ async function loadDays(options = {}) {
 
 function setItineraryFilter(category) {
   itineraryCategoryFilter = category;
+  tripDetailMode = 'itinerary';
+  updateTripDetailModeUI();
+  updateTripDetailFilterView();
   loadDays();
 }
 
@@ -3516,6 +2647,18 @@ async function saveTrip() {
     perfEnd(trace, { status: 'validation_error', reason: 'invalid_date_range' });
     toast('End date cannot be before start date', 'error');
     return;
+  }
+
+  if (!tripId && FAMILY_TRIP_FOCUS_MODE) {
+    const trips = await dbQuery('trips');
+    if (trips.length > 0) {
+      const existingTrip = pickSingleTrip(trips) || trips[0];
+      closeTripModal();
+      await openEditTripModal(existingTrip.id);
+      toast('Single-trip mode: edit the existing trip instead.', 'error');
+      perfEnd(trace, { status: 'blocked_create_single_mode', tripId: existingTrip.id });
+      return;
+    }
   }
 
   if (tripId) {
