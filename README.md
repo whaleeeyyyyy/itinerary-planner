@@ -1,7 +1,7 @@
 # Voyageur - Family Itinerary Planner
 
 A shared travel planner built with a single-page HTML app + Supabase.
-**DEMO:**https://whimsical-sunflower-87ee77.netlify.app/
+DEMO: https://whimsical-sunflower-87ee77.netlify.app/
 
 ## Why I Built This
 
