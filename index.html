@@ -526,6 +526,75 @@
     .consider-card ul { list-style: none; }
     .consider-card ul li { font-size: 13.5px; color: var(--ink-mid); padding: 3px 0; display: flex; gap: 6px; align-items: flex-start; }
     .consider-card ul li::before { content: '·'; color: var(--terracotta); font-size: 18px; line-height: 1.2; flex-shrink: 0; }
+    .essentials-shell {
+      display: grid;
+      gap: 14px;
+    }
+    .essentials-subtabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--white);
+      border: 1px solid var(--parchment);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .essentials-subtab-btn {
+      border: none;
+      border-right: 1px solid var(--parchment);
+      background: #fbfaf8;
+      color: var(--mist);
+      min-height: 50px;
+      padding: 10px 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .essentials-subtab-btn:last-child { border-right: none; }
+    .essentials-subtab-btn.active {
+      background: var(--forest);
+      color: #fff;
+    }
+    .essentials-panel { display: none; }
+    .essentials-panel.active { display: block; }
+    .trip-fx-card {
+      background: var(--white);
+      border: 1px solid var(--parchment);
+      border-radius: 12px;
+      padding: 14px;
+    }
+    .trip-fx-note {
+      margin-top: 8px;
+      margin-bottom: 0;
+    }
+    .trip-fx-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .trip-fx-reverse-wrap {
+      display: flex;
+      justify-content: center;
+      margin: 4px 0 10px;
+    }
+    .trip-fx-reverse-btn {
+      min-height: 44px;
+      padding: 10px 16px;
+    }
+    #tripFxToAmt[readonly] {
+      background: #f7f6f3;
+      color: var(--ink-mid);
+      cursor: default;
+    }
+    .trip-fx-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+    .trip-fx-actions .btn {
+      min-height: 44px;
+      padding: 10px 16px;
+    }
 
     /* ─── Modals ─── */
     .modal-overlay {
@@ -749,6 +818,8 @@
     }
     .itinerary-mode-btn { min-height: 50px; font-size: 15px; }
     .itinerary-mode-count { font-size: 13px; }
+    .trip-fx-row { grid-template-columns: 1fr; }
+    .trip-fx-actions .btn { width: 100%; justify-content: center; }
 
     .itinerary-filter-bar {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -935,6 +1006,8 @@
         align-items: center;
       }
       .trip-destination-row .btn { width: auto; }
+      .trip-fx-row { grid-template-columns: 1fr 1fr; }
+      .trip-fx-actions .btn { width: auto; }
 
       .day-card-head {
         flex-direction: row;
@@ -1342,6 +1415,7 @@ let currency = 'MYR';
 const expandedDayIds = new Set();
 let itineraryCategoryFilter = 'all';
 let activityFxDirection = 'from';
+let essentialsSubMode = 'trip';
 let syncInProgress = false;
 let offlineReadNotified = false;
 let loadDaysToken = 0;
@@ -1399,15 +1473,139 @@ function launchApp() {
 function mountConsiderationsIntoTrip() {
   const mount = document.getElementById('tripConsiderationsMount');
   const source = document.getElementById('panel-considerations');
-  if (!mount || !source || mount.dataset.mounted === '1') return;
+  if (!mount || !source) return;
+  if (mount.dataset.mounted === '1') {
+    populateTripFxSelects(false);
+    updateEssentialsSubModeUI();
+    return;
+  }
   const sourceGrid = source.querySelector('.considerations-grid');
   if (!sourceGrid) return;
   mount.innerHTML = `
-    <div class="section-head" style="margin-bottom:24px;">
-      <h2>Trip Essentials</h2>
+    <div class="essentials-shell">
+      <div class="essentials-subtabs">
+        <button class="essentials-subtab-btn" type="button" data-essentials-sub-mode="trip" onclick="setEssentialsSubMode('trip')">Trip Essentials</button>
+        <button class="essentials-subtab-btn" type="button" data-essentials-sub-mode="currency" onclick="setEssentialsSubMode('currency')">Currency Converter</button>
+      </div>
+      <div class="essentials-panel" id="tripEssentialsListPanel">
+        <div class="considerations-grid">${sourceGrid.innerHTML}</div>
+      </div>
+      <div class="essentials-panel" id="tripEssentialsCurrencyPanel">
+        <div class="trip-fx-card">
+          <div class="form-group">
+            <label>Amount</label>
+            <input type="number" id="tripFxFromAmt" placeholder="0" />
+          </div>
+          <div class="form-group">
+            <label>From Currency</label>
+            <select id="tripFxFromCur"></select>
+          </div>
+          <div class="trip-fx-reverse-wrap">
+            <button class="btn btn-ghost trip-fx-reverse-btn" type="button" onclick="reverseTripFxPair()">↕ Reverse</button>
+          </div>
+          <div class="form-group">
+            <label>To Currency</label>
+            <select id="tripFxToCur"></select>
+          </div>
+          <div class="form-group">
+            <label>Converted Amount</label>
+            <input type="number" id="tripFxToAmt" placeholder="0" readonly />
+          </div>
+          <div class="trip-fx-actions">
+            <button class="btn btn-secondary" type="button" id="tripFxButton" onclick="convertTripFx()">Convert</button>
+          </div>
+          <div class="fx-note trip-fx-note" id="tripFxNote"></div>
+        </div>
+      </div>
     </div>
-    <div class="considerations-grid">${sourceGrid.innerHTML}</div>`;
+  `;
   mount.dataset.mounted = '1';
+  populateTripFxSelects(true);
+  updateEssentialsSubModeUI();
+}
+
+function updateEssentialsSubModeUI() {
+  document.querySelectorAll('[data-essentials-sub-mode]').forEach(btn => {
+    const mode = btn.getAttribute('data-essentials-sub-mode');
+    btn.classList.toggle('active', mode === essentialsSubMode);
+  });
+  const listPanel = document.getElementById('tripEssentialsListPanel');
+  const currencyPanel = document.getElementById('tripEssentialsCurrencyPanel');
+  if (listPanel) listPanel.classList.toggle('active', essentialsSubMode === 'trip');
+  if (currencyPanel) currencyPanel.classList.toggle('active', essentialsSubMode === 'currency');
+}
+
+function setEssentialsSubMode(mode) {
+  essentialsSubMode = mode === 'currency' ? 'currency' : 'trip';
+  updateEssentialsSubModeUI();
+  if (essentialsSubMode === 'currency') populateTripFxSelects(false);
+}
+
+function setTripFxNote(message, isError = false) {
+  const note = document.getElementById('tripFxNote');
+  if (!note) return;
+  note.textContent = message || '';
+  note.style.color = isError ? 'var(--terracotta)' : 'var(--mist)';
+}
+
+function populateTripFxSelects(forceReset = false) {
+  const fromSelect = document.getElementById('tripFxFromCur');
+  const toSelect = document.getElementById('tripFxToCur');
+  if (!fromSelect || !toSelect) return;
+
+  const options = FX_CURRENCIES.map(code => `<option value="${code}">${code}</option>`).join('');
+  if (!fromSelect.options.length) fromSelect.innerHTML = options;
+  if (!toSelect.options.length) toSelect.innerHTML = options;
+
+  const preferred = FX_CURRENCIES.includes(currentTripData?.currency) ? currentTripData.currency : (currency || 'MYR');
+  if (forceReset || !fromSelect.value) fromSelect.value = preferred;
+  if (forceReset || !toSelect.value || toSelect.value === fromSelect.value) {
+    toSelect.value = fromSelect.value === 'USD' ? 'MYR' : 'USD';
+    if (toSelect.value === fromSelect.value) toSelect.value = 'EUR';
+  }
+  const btn = document.getElementById('tripFxButton');
+  if (btn) btn.textContent = 'Convert';
+}
+
+function reverseTripFxPair() {
+  const fromSelect = document.getElementById('tripFxFromCur');
+  const toSelect = document.getElementById('tripFxToCur');
+  const fromAmtEl = document.getElementById('tripFxFromAmt');
+  const toAmtEl = document.getElementById('tripFxToAmt');
+  if (!fromSelect || !toSelect || !fromAmtEl || !toAmtEl) return;
+
+  const prevFromCur = fromSelect.value;
+  fromSelect.value = toSelect.value;
+  toSelect.value = prevFromCur;
+
+  if (toAmtEl.value) {
+    const prevFromAmt = fromAmtEl.value;
+    fromAmtEl.value = toAmtEl.value;
+    toAmtEl.value = prevFromAmt;
+  }
+  setTripFxNote('');
+}
+
+async function convertTripFx() {
+  const fromCur = document.getElementById('tripFxFromCur')?.value;
+  const toCur = document.getElementById('tripFxToCur')?.value;
+  const fromAmtEl = document.getElementById('tripFxFromAmt');
+  const toAmtEl = document.getElementById('tripFxToAmt');
+  if (!fromAmtEl || !toAmtEl) return;
+
+  const sourceAmount = Number(fromAmtEl.value);
+  if (!sourceAmount || sourceAmount <= 0) {
+    setTripFxNote('Enter amount first.', true);
+    return;
+  }
+
+  try {
+    const result = await fetchConvertedAmount(sourceAmount, fromCur, toCur);
+    toAmtEl.value = result.converted.toFixed(2);
+    setTripFxNote(formatFxNote(fromCur, toCur, result));
+  } catch (error) {
+    setTripFxNote(error.message || 'Conversion failed', true);
+  }
 }
 
 function updateTripDetailFilterView() {
@@ -1435,6 +1633,10 @@ function getEssentialsModeCount() {
 
 function setTripDetailMode(mode) {
   tripDetailMode = mode === 'essentials' ? 'essentials' : 'itinerary';
+  if (tripDetailMode === 'essentials') {
+    mountConsiderationsIntoTrip();
+    updateEssentialsSubModeUI();
+  }
   updateTripDetailModeUI();
   updateTripDetailFilterView();
 }
